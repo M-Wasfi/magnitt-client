@@ -1,4 +1,5 @@
 export const LOADING = "LOADING";
+export const REQUEST_FAILED = "REQUEST_FAILED";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";

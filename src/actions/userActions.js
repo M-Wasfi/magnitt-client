@@ -17,9 +17,8 @@ const loading = () => (dispatch) => {
 };
 
 export const getAllUsers = () => async (dispatch) => {
+  loading();
   try {
-    loading();
-
     const users = await api.getUsers();
 
     dispatch({
@@ -33,9 +32,8 @@ export const getAllUsers = () => async (dispatch) => {
 };
 
 export const getUser = () => async (dispatch) => {
+  loading();
   try {
-    loading();
-
     const user = await api.getUser();
 
     dispatch({
@@ -49,9 +47,8 @@ export const getUser = () => async (dispatch) => {
 };
 
 export const searchUsers = (query) => async (dispatch) => {
+  loading();
   try {
-    loading();
-
     const users = await api.searchUsers(query);
 
     dispatch({

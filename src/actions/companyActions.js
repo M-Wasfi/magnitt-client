@@ -12,25 +12,37 @@ import {
   LOADING,
   ADD_USER_TO_COMPANY,
   GET_COMPANY,
+  REQUEST_FAILED,
 } from "./actionTypes";
 
-const loading = () => (dispatch) => {
-  dispatch({
+export function loading() {
+  return {
     type: LOADING,
-  });
-};
+  };
+}
+
+export function failed() {
+  return {
+    type: REQUEST_FAILED,
+  };
+}
 
 export const getAllCompanies = () => async (dispatch) => {
   try {
-    loading();
+    console.log("BEFORE");
+    dispatch(loading());
+    console.log("AFTER");
 
     const companies = await api.getCompanies();
+    console.log(companies);
 
     dispatch({
       type: GET_ALL_COMPANIES,
       payload: companies,
     });
   } catch (err) {
+    dispatch(failed());
+
     const error = err.response.data.message;
     toast.error(error);
   }
@@ -38,7 +50,7 @@ export const getAllCompanies = () => async (dispatch) => {
 
 export const getCompany = (companyId) => async (dispatch) => {
   try {
-    loading();
+    dispatch(loading());
 
     const company = await api.getCompany(companyId);
 
@@ -47,6 +59,8 @@ export const getCompany = (companyId) => async (dispatch) => {
       payload: company,
     });
   } catch (err) {
+    dispatch(failed());
+
     const error = err.response.data.message;
     toast.error(error);
   }
@@ -54,7 +68,7 @@ export const getCompany = (companyId) => async (dispatch) => {
 
 export const getMyCompany = () => async (dispatch) => {
   try {
-    loading();
+    dispatch(loading());
 
     const company = await api.getMyCompany();
 
@@ -63,6 +77,8 @@ export const getMyCompany = () => async (dispatch) => {
       payload: company,
     });
   } catch (err) {
+    dispatch(failed());
+
     const error = err.response.data.message;
     toast.error(error);
   }
@@ -70,7 +86,7 @@ export const getMyCompany = () => async (dispatch) => {
 
 export const createCompany = (companyData) => async (dispatch) => {
   try {
-    loading();
+    dispatch(loading());
 
     const company = await api.createCompany(companyData);
 
@@ -81,6 +97,8 @@ export const createCompany = (companyData) => async (dispatch) => {
       payload: company,
     });
   } catch (err) {
+    dispatch(failed());
+
     // const error = err.response.data.message;
     toast.error(err);
   }
@@ -88,7 +106,7 @@ export const createCompany = (companyData) => async (dispatch) => {
 
 export const sendConnectionRequest = (companyId) => async (dispatch) => {
   try {
-    loading();
+    dispatch(loading());
 
     await api.sendConnectionRequest(companyId);
 
@@ -99,42 +117,48 @@ export const sendConnectionRequest = (companyId) => async (dispatch) => {
       payload: companyId,
     });
   } catch (err) {
+    dispatch(failed());
+
     const error = err.response.data.message;
     toast.error(error);
   }
 };
 
-export const acceptConnectionRequest = (companyId) => async (dispatch) => {
+export const acceptConnectionRequest = (company) => async (dispatch) => {
   try {
-    loading();
+    dispatch(loading());
 
-    await api.acceptConnectionRequest(companyId);
+    await api.acceptConnectionRequest(company._id);
 
     toast.success("Connection request accepted");
 
     dispatch({
       type: ACCEPT_CONNECTION_REQUEST,
-      payload: companyId,
+      payload: company,
     });
   } catch (err) {
+    dispatch(failed());
+
     const error = err.response.data.message;
     toast.error(error);
   }
 };
 
-export const rejectConnectionRequest = (companyId) => async (dispatch) => {
+export const rejectConnectionRequest = (company) => async (dispatch) => {
   try {
-    loading();
+    dispatch(loading());
 
-    await api.rejectConnectionRequest(companyId);
+    await api.rejectConnectionRequest(company._id);
 
     toast.success("Connection request rejected");
 
     dispatch({
       type: REJECT_CONNECTION_REQUEST,
-      payload: companyId,
+      payload: company,
     });
   } catch (err) {
+    dispatch(failed());
+
     const error = err.response.data.message;
     toast.error(error);
   }
@@ -142,7 +166,7 @@ export const rejectConnectionRequest = (companyId) => async (dispatch) => {
 
 export const addUserToCompany = (employeeId) => async (dispatch) => {
   try {
-    loading();
+    dispatch(loading());
 
     await api.addUserToCompany(employeeId);
 
@@ -153,6 +177,8 @@ export const addUserToCompany = (employeeId) => async (dispatch) => {
       payload: employeeId,
     });
   } catch (err) {
+    dispatch(failed());
+
     const error = err.response.data.message;
     toast.error(error);
   }

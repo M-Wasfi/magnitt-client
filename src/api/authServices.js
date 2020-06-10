@@ -42,8 +42,7 @@ export async function getUser() {
   const userId = getCurrentUser().id;
   const response = await http.get(endpoint + `/${userId}`);
   const user = response.data.data;
-  console.log("APPPPPPPppppppp");
-  console.log(user);
+
   return user;
 }
 

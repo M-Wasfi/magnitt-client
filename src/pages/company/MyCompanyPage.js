@@ -4,21 +4,36 @@ import { connect } from "react-redux";
 import { getMyCompany } from "../../actions/companyActions";
 
 import Spinner from "../../components/spinner";
+import UsersList from "../../components/user/UsersList";
+import CompaniesList from "../../components/company/CompaniesList";
 
 const MyCompanyPage = ({ getMyCompany, loading, company }) => {
   useEffect(() => {
     getMyCompany();
   }, []);
 
-  if (loading) {
+  if (loading || company === null) {
     return <Spinner />;
   }
 
   return (
     <div className="container">
-      <h1>MyCompany</h1>
+      <h1>My Company</h1>
 
       <h1>Name: {company.companyName}</h1>
+      <ul>
+        <UsersList users={company.employees} />
+      </ul>
+
+      <h1>Company connections:</h1>
+      <ul>
+        <CompaniesList companies={company.companyConnections} />
+      </ul>
+
+      <h1>Pending connection requests:</h1>
+      <ul>
+        <CompaniesList companies={company.pendingConnections} pending={true} />
+      </ul>
     </div>
   );
 };

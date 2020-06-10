@@ -11,6 +11,7 @@ const CompaniesPage = ({ companies, loading, getAllCompanies }) => {
     getAllCompanies();
   }, []);
 
+  console.log(loading);
   if (loading) {
     return <Spinner />;
   }

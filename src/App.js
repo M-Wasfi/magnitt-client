@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import history from "./helpers/history";
 import Routes from "./routes";
 
 // Redux
@@ -24,7 +23,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <Router history={history}>
+      <Router>
         <Routes />
       </Router>
     </Provider>

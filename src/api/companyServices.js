@@ -14,7 +14,6 @@ export async function getCompanies() {
 }
 
 export async function getCompany(companyId) {
-  console.log(companyId);
   const response = await http.get(endpoint + `/${companyId}`);
   const company = response.data.data;
 
@@ -76,8 +75,6 @@ export async function addUserToCompany(employeeId) {
   const response = await http.post(endpoint + "/employee", {
     employee: employeeId,
   });
-
-  console.log(response.data);
 
   return response.data.message;
 }

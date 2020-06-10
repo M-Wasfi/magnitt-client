@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import {
+  getCompany,
   sendConnectionRequest,
   acceptConnectionRequest,
   rejectConnectionRequest,
-  getCompany,
 } from "../../actions/companyActions";
 import Spinner from "../../components/spinner";
+import UsersList from "../../components/user/UsersList";
 
 const CompanyPage = ({
   location,
   sendConnectionRequest,
   acceptConnectionRequest,
   rejectConnectionRequest,
+
   myCompany,
   company,
   getCompany,
@@ -36,10 +38,19 @@ const CompanyPage = ({
       return;
     }
 
-    const con = myCompany.companyConnections.includes(companyId);
-    const sent = myCompany.sentConnections.includes(companyId);
-    const pen = myCompany.pendingConnections.includes(companyId);
+    const con = myCompany.companyConnections.find(
+      (company) => company._id === companyId
+    );
+    const sent = myCompany.sentConnections.find(
+      (company) => company._id === companyId
+    );
+    const pen = myCompany.pendingConnections.find(
+      (company) => company._id === companyId
+    );
 
+    console.log(con);
+    console.log(sent);
+    console.log(pen);
     if (con) {
       setIsConnection({
         pending: false,
@@ -70,14 +81,12 @@ const CompanyPage = ({
     rejectConnectionRequest(location.state.company._id);
   };
 
-  if (loading) {
+  if (loading || company === null) {
     return <Spinner />;
   }
-
   return (
     <div className="container">
       <h1>{company.companyName}</h1>
-
       {!isConnection.connection ? (
         <button
           onClick={handleSend}
@@ -109,12 +118,9 @@ const CompanyPage = ({
       ) : (
         <div />
       )}
+
       <h1>Employees</h1>
-      <ul>
-        {company.employees.map((employee) => (
-          <li>{employee.userName}</li>
-        ))}
-      </ul>
+      <UsersList users={company.employees} />
     </div>
   );
 };

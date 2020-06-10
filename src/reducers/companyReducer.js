@@ -9,6 +9,7 @@ import {
   ADD_USER_TO_COMPANY,
   LOGOUT,
   GET_COMPANY,
+  REQUEST_FAILED,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -26,6 +27,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case REQUEST_FAILED:
+      return {
+        ...state,
+        loading: false,
       };
     case GET_ALL_COMPANIES:
       return {
