@@ -1,12 +1,11 @@
 import React from "react";
-import Navbar from "./navbar";
+import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { connect } from "react-redux";
 
 const AppContainer = (props) => {
   return (
     <div>
-      <ToastContainer />
       <Navbar />
       <div className="container-fluid">
         <div className="row">
@@ -41,10 +40,17 @@ const AppContainer = (props) => {
               </h6>
               <ul className="nav flex-column mb-2">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/home">
-                    <span data-feather="file-text"></span>
-                    My Company
-                  </Link>
+                  {props.user !== null && props.user.company !== null ? (
+                    <Link className="nav-link" to="/my-company">
+                      <span data-feather="file-text"></span>
+                      My Company
+                    </Link>
+                  ) : (
+                    <Link className="nav-link" to="/add-company">
+                      <span data-feather="file-text"></span>
+                      Create Company
+                    </Link>
+                  )}
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/home">
@@ -65,4 +71,8 @@ const AppContainer = (props) => {
   );
 };
 
-export default AppContainer;
+const mapStateToProps = (state) => ({
+  user: state.authReducer.user,
+});
+
+export default connect(mapStateToProps)(AppContainer);

@@ -3,25 +3,31 @@ import http from "./httpService";
 import { apiUrl } from "../config.json";
 
 const tokenKey = "token";
+const endpoint = apiUrl + "/users";
 
 http.setJwt(getJwt());
 
 export async function login(email, password) {
-  console.log("***");
-  const { data } = await http.post(apiUrl + "/users/login", {
+  const response = await http.post(endpoint + "/login", {
     email: email,
     password: password,
   });
-  localStorage.setItem(tokenKey, data.token);
+
+  const data = response.data.data;
+
+  http.setJwt(data.token);
+
   return data.user;
 }
 
-export function register(user) {
-  return http.post(apiUrl + "/register", {
-    name: user.name,
-    email: user.email,
-    password: user.password,
-  });
+export async function register(user) {
+  const response = await http.post(endpoint + "/register", user);
+
+  const data = response.data.data;
+
+  http.setJwt(data.token);
+
+  return data.user;
 }
 
 export function loginWithJwt(jwt) {
@@ -30,6 +36,15 @@ export function loginWithJwt(jwt) {
 
 export function logout() {
   localStorage.removeItem(tokenKey);
+}
+
+export async function getUser() {
+  const userId = getCurrentUser().id;
+  const response = await http.get(endpoint + `/${userId}`);
+  const user = response.data.data;
+  console.log("APPPPPPPppppppp");
+  console.log(user);
+  return user;
 }
 
 export function getCurrentUser() {

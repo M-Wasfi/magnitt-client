@@ -23,3 +23,18 @@ export function updateUser(user) {
 export function deleteUser(userId) {
   return http.delete(endpoint + `/${userId}`);
 }
+
+export async function searchUsers(query) {
+  const response = await http.post(endpoint + "/email", { email: query });
+  const users = response.data.data;
+
+  return users;
+}
+
+export default {
+  getUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+  searchUsers,
+};

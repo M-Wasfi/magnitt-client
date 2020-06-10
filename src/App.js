@@ -1,35 +1,34 @@
-import React from "react";
-import { Router } from "react-router-dom";
-
+import React, { useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import history from "./helpers/history";
-
 import Routes from "./routes";
 
+// Redux
+import { Provider } from "react-redux";
+import store from "./store";
+import { loadUser } from "./actions/authActions";
+import { getMyCompany } from "./actions/companyActions";
+import methods from "./api/httpService";
+//
 // import logo from "./logo.svg";
 import "./App.css";
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    methods.setJwt(token);
+    store.dispatch(loadUser());
+    store.dispatch(getMyCompany());
+  }, []);
+
   return (
-    <Router history={history}>
-      <Routes />
-    </Router>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
+    <Provider store={store}>
+      <Router history={history}>
+        <Routes />
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;

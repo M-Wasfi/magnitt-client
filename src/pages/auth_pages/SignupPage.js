@@ -1,7 +1,7 @@
 import React from "react";
-import SignupForm from "../../components/signup/signup";
+import SignupForm from "../../components/auth_forms/SignUpForm";
 
-const SignupPage = (props) => {
+const SignUpPage = (props) => {
   return (
     <div className="container">
       <SignupForm {...props} />
@@ -11,4 +11,4 @@ const SignupPage = (props) => {
 
 // const styles = {};
 
-export default SignupPage;
+export default SignUpPage;
