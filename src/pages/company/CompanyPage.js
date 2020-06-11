@@ -7,15 +7,15 @@ import {
   rejectConnectionRequest,
 } from "../../actions/companyActions";
 import Spinner from "../../components/spinner";
-import UsersList from "../../components/user/UsersList";
-import { CardContainer } from "../../components/CardContainer";
+import { getStatus } from "../../helpers/getStatus";
+import { CompanyProfile } from "../../components/company/CompanyProfile";
 
 const CompanyPage = ({
   location,
   sendConnectionRequest,
   acceptConnectionRequest,
   rejectConnectionRequest,
-
+  user,
   myCompany,
   company,
   getCompany,
@@ -25,135 +25,53 @@ const CompanyPage = ({
     pending: false,
     connection: false,
     sent: false,
-    company: false,
+    company: true,
   });
 
+  const otherCompanyId = location.state.company._id;
   useEffect(() => {
-    const companyId = location.state.company._id;
+    getCompany(otherCompanyId);
 
-    getCompany(companyId);
-
-    if (myCompany === null) {
-      setIsConnection({
-        pending: false,
-        connection: false,
-        sent: false,
-        company: false,
-      });
-      return;
-    }
-
-    const con = myCompany.companyConnections.find(
-      (company) => company._id === companyId
-    );
-    const sent = myCompany.sentConnections.find(
-      (company) => company._id === companyId
-    );
-    const pen = myCompany.pendingConnections.find(
-      (company) => company._id === companyId
-    );
-
-    if (con) {
-      setIsConnection({
-        ...isConnection,
-        connection: true,
-      });
-    } else if (sent) {
-      setIsConnection({
-        ...isConnection,
-        sent: true,
-      });
-    } else if (pen) {
-      setIsConnection({
-        ...isConnection,
-        pending: true,
-      });
-    }
+    const connectionStatus = getStatus(myCompany, otherCompanyId);
+    setIsConnection(connectionStatus);
   }, []);
 
-  const handleSend = () => {
-    sendConnectionRequest(location.state.company._id);
+  const handleSend = (company) => {
+    sendConnectionRequest(company);
   };
 
-  const handleAccept = () => {
-    acceptConnectionRequest(location.state.company._id);
+  const handleAccept = (company) => {
+    acceptConnectionRequest(company);
   };
 
-  const handleReject = () => {
-    rejectConnectionRequest(location.state.company._id);
+  const handleReject = (company) => {
+    rejectConnectionRequest(company);
   };
 
   if (loading || company === null) {
     return <Spinner />;
   }
 
+  // console.log(isConnection);
   return (
-    <div className="container">
-      <div className="row">
-        <CardContainer>
-          <h1>{company.companyName} </h1>
-          <h4>
-            {isConnection.company
-              ? ""
-              : isConnection.connection
-              ? "Connected"
-              : ""}
-          </h4>
-
-          {!isConnection.sent &&
-          !isConnection.pending & !isConnection.connection &&
-          isConnection.company ? (
-            <button
-              onClick={handleSend}
-              className="btn btn-primary"
-              style={styles.submit}
-            >
-              Connect
-            </button>
-          ) : (
-            <div />
-          )}
-          {isConnection.pending ? (
-            <div>
-              <button
-                onClick={handleAccept}
-                className="btn btn-success"
-                style={styles.submit}
-              >
-                Accept
-              </button>
-              <button
-                onClick={handleReject}
-                className="btn btn-danger"
-                style={styles.submit}
-              >
-                Reject
-              </button>
-            </div>
-          ) : (
-            <div />
-          )}
-        </CardContainer>
-      </div>
-
-      <CardContainer>
-        <h1>Employees</h1>
-        <UsersList users={company.employees} own={true} />
-      </CardContainer>
-    </div>
+    <CompanyProfile
+      con={isConnection}
+      company={company}
+      otherCompanyId={otherCompanyId}
+      myCompany={myCompany}
+      handleAccept={handleAccept}
+      handleSend={handleSend}
+      handleReject={handleReject}
+      userId={user._id}
+    />
   );
-};
-
-const styles = {
-  submit: {
-    margin: 3,
-  },
 };
 
 const mapStateToProps = (state) => ({
   myCompany: state.companyReducer.myCompany,
   company: state.companyReducer.company,
   loading: state.companyReducer.loading,
+  user: state.authReducer.user,
 });
 
 export default connect(mapStateToProps, {

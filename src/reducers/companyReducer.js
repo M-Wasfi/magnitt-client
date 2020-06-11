@@ -63,6 +63,11 @@ export default function (state = initialState, action) {
         myCompany: {
           ...state.myCompany,
           companyConnections: [...state.myCompany.companyConnections, payload],
+          pendingConnections: [
+            ...state.myCompany.pendingConnections.filter(
+              (com) => com._id === payload._id
+            ),
+          ],
         },
       };
     case REJECT_CONNECTION_REQUEST:

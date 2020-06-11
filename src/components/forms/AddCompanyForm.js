@@ -27,54 +27,48 @@ const AddCompanyForm = ({ myCompany, createCompany }) => {
 
   return (
     <CardContainer>
-      <div className="container" style={styles.paper}>
-        <form style={styles.form} onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="Name">Company's Name</label>
-            <input
-              type="text"
-              className="form-control"
-              name="companyName"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Type</label>
-            <input
-              type="text"
-              className="form-control"
-              name="type"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Size</label>
-            <input
-              type="text"
-              className="form-control"
-              name="size"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Industry</label>
-            <input
-              type="text"
-              className="form-control"
-              name="industry"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
+      <form style={styles.form} onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="Name">Company's Name</label>
+          <input
+            type="text"
+            className="form-control"
+            name="companyName"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Type</label>
+          <input
+            type="text"
+            className="form-control"
+            name="type"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Size</label>
+          <input
+            type="text"
+            className="form-control"
+            name="size"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Industry</label>
+          <input
+            type="text"
+            className="form-control"
+            name="industry"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary"
-            style={styles.submit}
-          >
-            Submit
-          </button>
-        </form>
-      </div>
+        <button type="submit" className="btn btn-primary" style={styles.submit}>
+          Submit
+        </button>
+      </form>
     </CardContainer>
   );
 };

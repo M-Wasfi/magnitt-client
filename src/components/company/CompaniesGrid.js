@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   acceptConnectionRequest,
@@ -9,17 +8,16 @@ import { CompanyCard } from "./CompanyCard";
 
 const CompaniesGrid = ({
   companies,
-  pending,
   acceptConnectionRequest,
   rejectConnectionRequest,
 }) => {
-  const handleAccept = (company) => {
-    acceptConnectionRequest(company);
-  };
+  // const handleAccept = (company) => {
+  //   acceptConnectionRequest(company);
+  // };
 
-  const handleReject = (company) => {
-    rejectConnectionRequest(company);
-  };
+  // const handleReject = (company) => {
+  //   rejectConnectionRequest(company);
+  // };
 
   return (
     <div class="container-fluid row">
