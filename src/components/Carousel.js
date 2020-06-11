@@ -2,16 +2,16 @@ import React from "react";
 
 export const Carousel = () => {
   return (
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class=""></li>
-        <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+    <div id="myCarousel" className="carousel slide" data-ride="carousel">
+      <ol className="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" className=""></li>
+        <li data-target="#myCarousel" data-slide-to="1" className="active"></li>
+        <li data-target="#myCarousel" data-slide-to="2" className=""></li>
       </ol>
-      <div class="carousel-inner">
-        <div class="carousel-item">
+      <div className="carousel-inner">
+        <div className="carousel-item">
           <svg
-            class="bd-placeholder-img"
+            className="bd-placeholder-img"
             width="100%"
             height="100%"
             xmlns="http://www.w3.org/2000/svg"
@@ -21,8 +21,8 @@ export const Carousel = () => {
           >
             <rect width="100%" height="100%" fill="#777"></rect>
           </svg>
-          <div class="container">
-            <div class="carousel-caption text-left">
+          <div className="container">
+            <div className="carousel-caption text-left">
               <h1>Example headline.</h1>
               <p>
                 Cras justo odio, dapibus ac facilisis in, egestas eget quam.
@@ -30,16 +30,20 @@ export const Carousel = () => {
                 dolor id nibh ultricies vehicula ut id elit.
               </p>
               <p>
-                <a class="btn btn-lg btn-primary" href="#" role="button">
+                <a
+                  className="btn btn-lg btn-primary"
+                  href="/home"
+                  role="button"
+                >
                   Sign up today
                 </a>
               </p>
             </div>
           </div>
         </div>
-        <div class="carousel-item active">
+        <div className="carousel-item active">
           <svg
-            class="bd-placeholder-img"
+            className="bd-placeholder-img"
             width="100%"
             height="100%"
             xmlns="http://www.w3.org/2000/svg"
@@ -49,8 +53,8 @@ export const Carousel = () => {
           >
             <rect width="100%" height="100%" fill="#777"></rect>
           </svg>
-          <div class="container">
-            <div class="carousel-caption">
+          <div className="container">
+            <div className="carousel-caption">
               <h1>Another example headline.</h1>
               <p>
                 Cras justo odio, dapibus ac facilisis in, egestas eget quam.
@@ -58,16 +62,20 @@ export const Carousel = () => {
                 dolor id nibh ultricies vehicula ut id elit.
               </p>
               <p>
-                <a class="btn btn-lg btn-primary" href="#" role="button">
+                <a
+                  className="btn btn-lg btn-primary"
+                  href="/home"
+                  role="button"
+                >
                   Learn more
                 </a>
               </p>
             </div>
           </div>
         </div>
-        <div class="carousel-item">
+        <div className="carousel-item">
           <svg
-            class="bd-placeholder-img"
+            className="bd-placeholder-img"
             width="100%"
             height="100%"
             xmlns="http://www.w3.org/2000/svg"
@@ -77,8 +85,8 @@ export const Carousel = () => {
           >
             <rect width="100%" height="100%" fill="#777"></rect>
           </svg>
-          <div class="container">
-            <div class="carousel-caption text-right">
+          <div className="container">
+            <div className="carousel-caption text-right">
               <h1>One more for good measure.</h1>
               <p>
                 Cras justo odio, dapibus ac facilisis in, egestas eget quam.
@@ -86,7 +94,11 @@ export const Carousel = () => {
                 dolor id nibh ultricies vehicula ut id elit.
               </p>
               <p>
-                <a class="btn btn-lg btn-primary" href="#" role="button">
+                <a
+                  className="btn btn-lg btn-primary"
+                  href="/home"
+                  role="button"
+                >
                   Browse gallery
                 </a>
               </p>
@@ -95,22 +107,22 @@ export const Carousel = () => {
         </div>
       </div>
       <a
-        class="carousel-control-prev"
-        href="#myCarousel"
+        className="carousel-control-prev"
+        href="/homemyCarousel"
         role="button"
         data-slide="prev"
       >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="sr-only">Previous</span>
       </a>
       <a
-        class="carousel-control-next"
-        href="#myCarousel"
+        className="carousel-control-next"
+        href="/homemyCarousel"
         role="button"
         data-slide="next"
       >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="sr-only">Next</span>
       </a>
     </div>
   );

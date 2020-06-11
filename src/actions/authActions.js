@@ -10,33 +10,35 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  AUTHENTICATING,
 } from "./actionTypes";
 
-// const loading = () => (dispatch) => {
-//   dispatch({
-//     type: LOADING,
-//   });
-// };
+const loading = () => (dispatch) => {
+  dispatch({
+    type: AUTHENTICATING,
+  });
+};
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
   try {
-    // loading();
+    loading();
 
-    const user = await auth.login(email, password);
+    const data = await auth.login(email, password);
 
     toast.success("User logged in");
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: user,
+      payload: data,
     });
   } catch (err) {
-    const error = err.response.data.message;
-    toast.error(error);
+    const error = err.response.data.data.errors;
+    toast.error(err.response.data.message);
 
     dispatch({
       type: LOGIN_FAIL,
+      payload: error,
     });
   }
 };
@@ -44,22 +46,23 @@ export const login = (email, password) => async (dispatch) => {
 // Register User
 export const register = (userData) => async (dispatch) => {
   try {
-    // loading();
+    loading();
 
-    const user = await auth.register(userData);
+    const data = await auth.register(userData);
 
     toast.success("User registered");
 
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: user,
+      payload: data,
     });
   } catch (err) {
-    const error = err.response.data.message;
-    toast.error(error);
+    const error = err.response.data.data.errors;
+    toast.error(err.response.data.message);
 
     dispatch({
       type: REGISTER_FAIL,
+      payload: error,
     });
   }
 };
@@ -67,7 +70,7 @@ export const register = (userData) => async (dispatch) => {
 // Logout
 export const logout = () => async (dispatch) => {
   try {
-    // loading();
+    loading();
 
     await auth.logout();
 
@@ -75,8 +78,8 @@ export const logout = () => async (dispatch) => {
 
     dispatch({ type: LOGOUT });
   } catch (err) {
-    const error = err.response.data.message;
-    toast.error(error);
+    // const error = err.response.data.message;
+    toast.error(err);
 
     dispatch({
       type: REGISTER_FAIL,
@@ -87,6 +90,8 @@ export const logout = () => async (dispatch) => {
 // Load User
 export const loadUser = () => async (dispatch) => {
   try {
+    loading();
+
     const user = await auth.getUser();
 
     dispatch({

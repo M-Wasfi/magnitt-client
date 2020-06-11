@@ -1,10 +1,11 @@
 import {
   REGISTER_SUCCESS,
-  //REGISTER_FAIL,
+  REGISTER_FAIL,
   USER_LOADED,
   LOGIN_SUCCESS,
-  //LOGIN_FAIL,
+  LOGIN_FAIL,
   LOGOUT,
+  AUTHENTICATING,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -12,17 +13,18 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  errors: null,
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    // case LOADING:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
+    case AUTHENTICATING:
+      return {
+        ...state,
+        loading: true,
+      };
     case USER_LOADED:
       return {
         ...state,
@@ -35,14 +37,16 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: payload,
+        user: payload.user,
+        token: payload.token,
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: payload,
         isAuthenticated: true,
         loading: false,
+        user: payload.user,
+        token: payload.token,
       };
 
     case LOGOUT:
@@ -52,6 +56,18 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         loading: false,
         user: null,
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        errors: payload,
+      };
+    case REGISTER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        errors: payload,
       };
     default:
       return state;

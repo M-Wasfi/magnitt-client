@@ -11,7 +11,7 @@ import { CardContainer } from "../../components/CardContainer";
 const MyCompanyPage = ({ getMyCompany, loading, company }) => {
   useEffect(() => {
     getMyCompany();
-  }, []);
+  }, [getMyCompany]);
 
   if (loading || company === null) {
     return <Spinner />;

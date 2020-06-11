@@ -17,7 +17,7 @@ export async function login(email, password) {
 
   http.setJwt(data.token);
 
-  return data.user;
+  return data;
 }
 
 export async function register(user) {
@@ -27,7 +27,7 @@ export async function register(user) {
 
   http.setJwt(data.token);
 
-  return data.user;
+  return data;
 }
 
 export function loginWithJwt(jwt) {

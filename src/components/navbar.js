@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/authActions";
 
-const Navbar = ({ logout, user }) => {
+const Navbar = ({ logout, user, isAuthenticated }) => {
   const handleLogout = () => {
     logout();
   };
@@ -72,13 +72,19 @@ const Navbar = ({ logout, user }) => {
         </ul>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
-            <button
-              className="btn btn-sm btn-danger"
-              // style={{ color: "#fff" }}
-              onClick={handleLogout}
-            >
-              Sign out
-            </button>
+            {isAuthenticated ? (
+              <button
+                className="btn btn-sm btn-danger"
+                // style={{ color: "#fff" }}
+                onClick={handleLogout}
+              >
+                Sign out
+              </button>
+            ) : (
+              <Link className="btn btn-sm btn-success" to="/login">
+                Login
+              </Link>
+            )}
           </li>
         </ul>
       </div>
@@ -88,6 +94,7 @@ const Navbar = ({ logout, user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.authReducer.user,
+  isAuthenticated: state.authReducer.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

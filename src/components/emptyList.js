@@ -4,7 +4,7 @@ import image from "../images/empty.png";
 export const EmptyList = () => {
   return (
     <div style={styles.container}>
-      <img src={image} style={styles.image} />
+      <img src={image} style={styles.image} alt="No Data.." />
       <h4>No Data..</h4>
     </div>
   );

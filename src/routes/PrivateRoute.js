@@ -9,20 +9,22 @@ const PrivateRoute = ({
   isAuthenticated,
   loading,
   ...rest
-}) => (
-  <Route
-    {...rest}
-    render={(props) =>
-      loading ? (
-        <Spinner />
-      ) : isAuthenticated ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/login" />
-      )
-    }
-  />
-);
+}) => {
+  console.log("**********************");
+  console.log("isAuthenticated");
+  console.log(isAuthenticated);
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        // loading ? (
+        //   <Spinner />
+        // ) :
+        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+      }
+    />
+  );
+};
 
 PrivateRoute.propTypes = {
   isAuthenticated: PropTypes.bool,

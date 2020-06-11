@@ -88,9 +88,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        companies: [],
         myCompany: null,
-        company: null,
       };
     case LOADING_COMPANIES:
       return {

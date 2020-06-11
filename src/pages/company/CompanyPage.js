@@ -16,6 +16,7 @@ const CompanyPage = ({
   acceptConnectionRequest,
   rejectConnectionRequest,
   user,
+  isAuthenticated,
   myCompany,
   company,
   getCompany,
@@ -29,12 +30,14 @@ const CompanyPage = ({
   });
 
   const otherCompanyId = location.state.company._id;
+
   useEffect(() => {
     getCompany(otherCompanyId);
 
     const connectionStatus = getStatus(myCompany, otherCompanyId);
+
     setIsConnection(connectionStatus);
-  }, []);
+  }, [getCompany, otherCompanyId, myCompany]);
 
   const handleSend = (company) => {
     sendConnectionRequest(company);
@@ -52,7 +55,6 @@ const CompanyPage = ({
     return <Spinner />;
   }
 
-  // console.log(isConnection);
   return (
     <CompanyProfile
       con={isConnection}
@@ -62,7 +64,8 @@ const CompanyPage = ({
       handleAccept={handleAccept}
       handleSend={handleSend}
       handleReject={handleReject}
-      userId={user._id}
+      userId={user !== null ? user._id : 0}
+      isAuthenticated={isAuthenticated}
     />
   );
 };
@@ -72,6 +75,7 @@ const mapStateToProps = (state) => ({
   company: state.companyReducer.company,
   loading: state.companyReducer.loading,
   user: state.authReducer.user,
+  isAuthenticated: state.authReducer.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {

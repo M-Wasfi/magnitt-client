@@ -17,7 +17,7 @@ const UsersPage = ({
 }) => {
   useEffect(() => {
     getAllUsers();
-  }, []);
+  }, [getAllUsers]);
 
   // if (loading) {
   //   return <Spinner />;

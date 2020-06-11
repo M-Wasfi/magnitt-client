@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { CardContainer } from "../CardContainer";
 import { EmptyList } from "../emptyList";
 import { Link } from "react-router-dom";
@@ -57,6 +58,11 @@ export const UserProfile = ({ user, handleAdd }) => {
       </CardContainer>
     </div>
   );
+};
+
+UserProfile.propTypes = {
+  user: PropTypes.object.isRequired,
+  handleAdd: PropTypes.func.isRequired,
 };
 
 const styles = {

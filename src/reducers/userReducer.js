@@ -62,10 +62,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        searching: false,
-        users: [],
-        searchResult: [],
-        user: null,
       };
     case LOADING_USERS:
       return {

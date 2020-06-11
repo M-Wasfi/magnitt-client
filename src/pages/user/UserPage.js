@@ -14,18 +14,22 @@ const UserPage = ({
   loading,
   myCompany,
 }) => {
+  const userId = location.state.user._id;
+
+  useEffect(() => {
+    getUser(userId);
+  }, [getUser, userId]);
+
   const handleAdd = () => {
     addUserToCompany(user._id, myCompany._id);
   };
 
-  useEffect(() => {
-    getUser(location.state.user._id);
-  }, []);
-
-  if (loading) {
+  if (loading || user === null) {
     return <Spinner />;
   }
 
+  console.log("###########");
+  console.log(user);
   return <UserProfile user={user} handleAdd={handleAdd} />;
 };
 

@@ -28,17 +28,17 @@ export default function Routes() {
         <Route exact path="/register" component={SignupPage} />
 
         <AppContainer>
-          <PrivateRoute exact path="/home" component={HomePage} />
-          <PrivateRoute exact path="/companies" component={CompaniesPage} />
-          <PrivateRoute exact path="/company" component={CompanyPage} />
+          <Route exact path="/home" component={HomePage} />
+          <Route exact path="/companies" component={CompaniesPage} />
+          <Route exact path="/company" component={CompanyPage} />
           <PrivateRoute exact path="/my-company" component={MyCompanyPage} />
           <PrivateRoute
             exact
             path="/add-company"
             component={CreateCompanyPage}
           />
-          <PrivateRoute exact path="/users" component={UsersPage} />
-          <PrivateRoute exact path="/user" component={UserPage} />
+          <Route exact path="/users" component={UsersPage} />
+          <Route exact path="/user" component={UserPage} />
           <PrivateRoute exact path="/profile" component={ProfilePage} />
         </AppContainer>
 

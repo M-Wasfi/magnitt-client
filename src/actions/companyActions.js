@@ -57,8 +57,8 @@ export const getCompany = (companyId) => async (dispatch) => {
     });
   } catch (err) {
     dispatch(failed());
-    const error = err.response.data.message;
-    toast.error(error);
+    // const error = err.response.data.message;
+    toast.error(err);
   }
 };
 
