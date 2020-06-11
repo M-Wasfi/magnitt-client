@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createCompany } from "../../actions/companyActions";
+import { CardContainer } from "../CardContainer";
 
 const AddCompanyForm = ({ myCompany, createCompany }) => {
   const [company, setCompany] = useState({
@@ -25,50 +26,56 @@ const AddCompanyForm = ({ myCompany, createCompany }) => {
   }
 
   return (
-    <div className="container" style={styles.paper}>
-      <form style={styles.form} onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="Name">Company's Name</label>
-          <input
-            type="text"
-            className="form-control"
-            name="companyName"
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Type</label>
-          <input
-            type="text"
-            className="form-control"
-            name="type"
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Size</label>
-          <input
-            type="text"
-            className="form-control"
-            name="size"
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Industry</label>
-          <input
-            type="text"
-            className="form-control"
-            name="industry"
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
+    <CardContainer>
+      <div className="container" style={styles.paper}>
+        <form style={styles.form} onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="Name">Company's Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="companyName"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="exampleInputEmail1">Type</label>
+            <input
+              type="text"
+              className="form-control"
+              name="type"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="exampleInputEmail1">Size</label>
+            <input
+              type="text"
+              className="form-control"
+              name="size"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="exampleInputEmail1">Industry</label>
+            <input
+              type="text"
+              className="form-control"
+              name="industry"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
 
-        <button type="submit" className="btn btn-primary" style={styles.submit}>
-          Submit
-        </button>
-      </form>
-    </div>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={styles.submit}
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </CardContainer>
   );
 };
 

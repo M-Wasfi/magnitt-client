@@ -4,8 +4,10 @@ import {
   GET_PROFILE,
   SEARCH_USERS,
   CANCEL_SEARCH,
-  LOADING,
   LOGOUT,
+  USERS_REQUEST_FAILED,
+  LOADING_USERS,
+  ADD_COMPANY_TO_USER,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -20,11 +22,6 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
     case GET_ALL_USERS:
       return {
         ...state,
@@ -50,6 +47,11 @@ export default function (state = initialState, action) {
         loading: false,
         searching: false,
       };
+    case ADD_COMPANY_TO_USER:
+      return {
+        ...state,
+        user: { ...state.user, company: payload },
+      };
     case GET_PROFILE:
       return {
         ...state,
@@ -65,7 +67,16 @@ export default function (state = initialState, action) {
         searchResult: [],
         user: null,
       };
-
+    case LOADING_USERS:
+      return {
+        ...state,
+        loading: true,
+      };
+    case USERS_REQUEST_FAILED:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

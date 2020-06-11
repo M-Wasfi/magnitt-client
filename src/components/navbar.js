@@ -9,7 +9,7 @@ const Navbar = ({ logout, user }) => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary sticky-top ">
       <Link className="navbar-brand" to="/home">
         Project
       </Link>
@@ -26,53 +26,55 @@ const Navbar = ({ logout, user }) => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        {/* <ul className="navbar-nav mr-auto">
+        <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <a className="nav-link" href="#">
-              Home <span className="sr-only">(current)</span>
-            </a>
+            <Link className="nav-link" to="/home">
+              Home
+            </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
+          <li className="nav-item active">
+            <Link className="nav-link" to="/users">
               Users
-            </a>
+            </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
+          <li className="nav-item active">
+            <Link className="nav-link" to="/companies">
               All Companies
-            </a>
+            </Link>
           </li>
-          <li className="nav-item dropdown">
-            <a
+          <li className="nav-item active dropdown">
+            <Link
               className="nav-link dropdown-toggle"
-              href="#"
+              to="#"
               id="navbarDropdown"
               role="button"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
-              My Company
-            </a>
+              Dashboard
+            </Link>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a className="dropdown-item" href="#">
-                Company Profile
-              </a>
-              <a className="dropdown-item" href="#">
-                Add Company
-              </a>
-              <a className="dropdown-item" href="#">
-                Add Employee
-              </a>
+              <Link className="dropdown-item" to="/profile">
+                Profile
+              </Link>
+              {user !== null && user.company !== null ? (
+                <Link className="dropdown-item" to="/my-company">
+                  Company Profile
+                </Link>
+              ) : (
+                <Link className="dropdown-item" to="/add-company">
+                  Add Company
+                </Link>
+              )}
             </div>
           </li>
-        </ul> */}
+        </ul>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
-            {user !== null ? user.userName : ""}
             <button
-              className="btn"
-              style={{ color: "#fff" }}
+              className="btn btn-sm btn-danger"
+              // style={{ color: "#fff" }}
               onClick={handleLogout}
             >
               Sign out
@@ -91,9 +93,9 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { logout })(Navbar);
 
 // <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-//         <a className="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">
+//         <Link className="navbar-brand col-md-3 col-lg-2 mr-0 px-3" to="#">
 //           Company name
-//         </a>
+//         </Link>
 //         <button
 //           className="navbar-toggler position-absolute d-md-none collapsed"
 //           type="button"
@@ -113,9 +115,9 @@ export default connect(mapStateToProps, { logout })(Navbar);
 //         />
 //         <ul className="navbar-nav px-3">
 //           <li className="nav-item text-nowrap">
-//             <a className="nav-link" href="#">
+//             <Link className="nav-link" to="#">
 //               Sign out
-//             </a>
+//             </Link>
 //           </li>
 //         </ul>
 //       </nav>

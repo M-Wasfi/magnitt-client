@@ -8,8 +8,7 @@ import store from "./store";
 import { loadUser } from "./actions/authActions";
 import { getMyCompany } from "./actions/companyActions";
 import methods from "./api/httpService";
-//
-// import logo from "./logo.svg";
+
 import "./App.css";
 
 const App = () => {

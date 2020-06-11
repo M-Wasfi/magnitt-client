@@ -10,19 +10,18 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  LOADING,
 } from "./actionTypes";
 
-const loading = () => (dispatch) => {
-  dispatch({
-    type: LOADING,
-  });
-};
+// const loading = () => (dispatch) => {
+//   dispatch({
+//     type: LOADING,
+//   });
+// };
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
   try {
-    loading();
+    // loading();
 
     const user = await auth.login(email, password);
 
@@ -45,7 +44,7 @@ export const login = (email, password) => async (dispatch) => {
 // Register User
 export const register = (userData) => async (dispatch) => {
   try {
-    loading();
+    // loading();
 
     const user = await auth.register(userData);
 
@@ -68,7 +67,7 @@ export const register = (userData) => async (dispatch) => {
 // Logout
 export const logout = () => async (dispatch) => {
   try {
-    loading();
+    // loading();
 
     await auth.logout();
 
@@ -88,8 +87,6 @@ export const logout = () => async (dispatch) => {
 // Load User
 export const loadUser = () => async (dispatch) => {
   try {
-    loading();
-
     const user = await auth.getUser();
 
     dispatch({

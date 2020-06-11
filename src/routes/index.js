@@ -16,6 +16,7 @@ import PrivateRoute from "./PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Landing from "../pages/Landing";
+import ProfilePage from "../pages/user/ProfilePage";
 
 export default function Routes() {
   return (
@@ -38,6 +39,7 @@ export default function Routes() {
           />
           <PrivateRoute exact path="/users" component={UsersPage} />
           <PrivateRoute exact path="/user" component={UserPage} />
+          <PrivateRoute exact path="/profile" component={ProfilePage} />
         </AppContainer>
 
         {/* redirect user to Login page if route does not exist and user is not authenticated */}

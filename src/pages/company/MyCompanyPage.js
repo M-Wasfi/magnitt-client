@@ -6,6 +6,7 @@ import { getMyCompany } from "../../actions/companyActions";
 import Spinner from "../../components/spinner";
 import UsersList from "../../components/user/UsersList";
 import CompaniesList from "../../components/company/CompaniesList";
+import { CardContainer } from "../../components/CardContainer";
 
 const MyCompanyPage = ({ getMyCompany, loading, company }) => {
   useEffect(() => {
@@ -18,22 +19,33 @@ const MyCompanyPage = ({ getMyCompany, loading, company }) => {
 
   return (
     <div className="container">
-      <h1>My Company</h1>
+      <CardContainer>
+        <h1>{company.companyName} Dashboard</h1>
+      </CardContainer>
 
-      <h1>Name: {company.companyName}</h1>
-      <ul>
-        <UsersList users={company.employees} />
-      </ul>
+      <CardContainer>
+        <h1>Employees </h1>
+        <ul>
+          <UsersList users={company.employees} own={true} />
+        </ul>
+      </CardContainer>
 
-      <h1>Company connections:</h1>
-      <ul>
-        <CompaniesList companies={company.companyConnections} />
-      </ul>
+      <CardContainer>
+        <h1>Company connections</h1>
+        <ul>
+          <CompaniesList companies={company.companyConnections} />
+        </ul>
+      </CardContainer>
 
-      <h1>Pending connection requests:</h1>
-      <ul>
-        <CompaniesList companies={company.pendingConnections} pending={true} />
-      </ul>
+      <CardContainer>
+        <h1>Pending connection requests</h1>
+        <ul>
+          <CompaniesList
+            companies={company.pendingConnections}
+            pending={true}
+          />
+        </ul>
+      </CardContainer>
     </div>
   );
 };

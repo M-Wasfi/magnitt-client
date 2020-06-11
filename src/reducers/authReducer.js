@@ -5,7 +5,6 @@ import {
   LOGIN_SUCCESS,
   //LOGIN_FAIL,
   LOGOUT,
-  LOADING,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -19,11 +18,11 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
+    // case LOADING:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
     case USER_LOADED:
       return {
         ...state,

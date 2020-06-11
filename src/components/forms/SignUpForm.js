@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { register } from "../../actions/authActions";
 import { toast } from "react-toastify";
+import { CardContainer } from "../CardContainer";
 
 const SignupForm = ({ isAuthenticated, register }) => {
   const [user, setUser] = useState({
@@ -35,7 +36,7 @@ const SignupForm = ({ isAuthenticated, register }) => {
   }
 
   return (
-    <div className="container" style={styles.paper}>
+    <CardContainer>
       <form style={styles.form} onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -85,7 +86,7 @@ const SignupForm = ({ isAuthenticated, register }) => {
       <p className="my-1">
         Already have an account? <Link to="/login">Sign In</Link>
       </p>
-    </div>
+    </CardContainer>
   );
 };
 

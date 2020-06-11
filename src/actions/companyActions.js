@@ -9,32 +9,30 @@ import {
   SEND_CONNECTION_REQUEST,
   ACCEPT_CONNECTION_REQUEST,
   REJECT_CONNECTION_REQUEST,
-  LOADING,
   ADD_USER_TO_COMPANY,
   GET_COMPANY,
-  REQUEST_FAILED,
+  COMPANIES_REQUEST_FAILED,
+  LOADING_COMPANIES,
+  ADD_COMPANY_TO_USER,
 } from "./actionTypes";
 
 export function loading() {
   return {
-    type: LOADING,
+    type: LOADING_COMPANIES,
   };
 }
 
 export function failed() {
   return {
-    type: REQUEST_FAILED,
+    type: COMPANIES_REQUEST_FAILED,
   };
 }
 
 export const getAllCompanies = () => async (dispatch) => {
   try {
-    console.log("BEFORE");
     dispatch(loading());
-    console.log("AFTER");
 
     const companies = await api.getCompanies();
-    console.log(companies);
 
     dispatch({
       type: GET_ALL_COMPANIES,
@@ -42,8 +40,7 @@ export const getAllCompanies = () => async (dispatch) => {
     });
   } catch (err) {
     dispatch(failed());
-
-    const error = err.response.data.message;
+    const error = err;
     toast.error(error);
   }
 };
@@ -60,7 +57,6 @@ export const getCompany = (companyId) => async (dispatch) => {
     });
   } catch (err) {
     dispatch(failed());
-
     const error = err.response.data.message;
     toast.error(error);
   }
@@ -79,8 +75,8 @@ export const getMyCompany = () => async (dispatch) => {
   } catch (err) {
     dispatch(failed());
 
-    const error = err.response.data.message;
-    toast.error(error);
+    // const error = err.response.data.message;
+    toast.error(err);
   }
 };
 
@@ -164,7 +160,7 @@ export const rejectConnectionRequest = (company) => async (dispatch) => {
   }
 };
 
-export const addUserToCompany = (employeeId) => async (dispatch) => {
+export const addUserToCompany = (employeeId, companyId) => async (dispatch) => {
   try {
     dispatch(loading());
 
@@ -175,6 +171,11 @@ export const addUserToCompany = (employeeId) => async (dispatch) => {
     dispatch({
       type: ADD_USER_TO_COMPANY,
       payload: employeeId,
+    });
+
+    dispatch({
+      type: ADD_COMPANY_TO_USER,
+      payload: companyId,
     });
   } catch (err) {
     dispatch(failed());

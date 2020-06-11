@@ -7,9 +7,9 @@ const AppContainer = (props) => {
   return (
     <div>
       <Navbar />
-      <div className="container-fluid">
-        <div className="row">
-          <nav
+      <div className="main">
+        {/* <div className="row"> */}
+        {/* <nav
             id="sidebarMenu"
             className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
           >
@@ -40,6 +40,12 @@ const AppContainer = (props) => {
               </h6>
               <ul className="nav flex-column mb-2">
                 <li className="nav-item">
+                  <Link className="nav-link" to="/profile">
+                    <span data-feather="file-text"></span>
+                    Profile
+                  </Link>
+                </li>
+                <li className="nav-item">
                   {props.user !== null && props.user.company !== null ? (
                     <Link className="nav-link" to="/my-company">
                       <span data-feather="file-text"></span>
@@ -52,22 +58,16 @@ const AppContainer = (props) => {
                     </Link>
                   )}
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/home">
-                    <span data-feather="file-text"></span>
-                    Add Employee
-                  </Link>
-                </li>
               </ul>
             </div>
-          </nav>
+          </nav> */}
 
-          <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            {props.children}
-          </main>
-        </div>
+        <main role="main" className="main">
+          {props.children}
+        </main>
       </div>
     </div>
+    // </div>
   );
 };
 

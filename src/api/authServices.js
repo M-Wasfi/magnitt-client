@@ -66,4 +66,5 @@ export default {
   getCurrentUser,
   getJwt,
   register,
+  getUser,
 };

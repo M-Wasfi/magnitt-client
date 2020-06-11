@@ -10,8 +10,11 @@ export async function getUsers() {
   return users;
 }
 
-export function getUser(userId) {
-  return http.get(endpoint + `/${userId}`);
+export async function getUser(userId) {
+  const response = await http.get(endpoint + `/${userId}`);
+  const user = response.data.data;
+
+  return user;
 }
 
 export function updateUser(user) {

@@ -8,6 +8,7 @@ import {
 } from "../../actions/companyActions";
 import Spinner from "../../components/spinner";
 import UsersList from "../../components/user/UsersList";
+import { CardContainer } from "../../components/CardContainer";
 
 const CompanyPage = ({
   location,
@@ -23,6 +24,8 @@ const CompanyPage = ({
   const [isConnection, setIsConnection] = useState({
     pending: false,
     connection: false,
+    sent: false,
+    company: false,
   });
 
   useEffect(() => {
@@ -30,10 +33,12 @@ const CompanyPage = ({
 
     getCompany(companyId);
 
-    if (!myCompany) {
+    if (myCompany === null) {
       setIsConnection({
         pending: false,
-        connection: true,
+        connection: false,
+        sent: false,
+        company: false,
       });
       return;
     }
@@ -48,23 +53,20 @@ const CompanyPage = ({
       (company) => company._id === companyId
     );
 
-    console.log(con);
-    console.log(sent);
-    console.log(pen);
     if (con) {
       setIsConnection({
-        pending: false,
+        ...isConnection,
         connection: true,
       });
     } else if (sent) {
       setIsConnection({
-        pending: true,
-        connection: false,
+        ...isConnection,
+        sent: true,
       });
     } else if (pen) {
       setIsConnection({
+        ...isConnection,
         pending: true,
-        connection: false,
       });
     }
   }, []);
@@ -84,43 +86,60 @@ const CompanyPage = ({
   if (loading || company === null) {
     return <Spinner />;
   }
+
   return (
     <div className="container">
-      <h1>{company.companyName}</h1>
-      {!isConnection.connection ? (
-        <button
-          onClick={handleSend}
-          className="btn btn-primary"
-          style={styles.submit}
-        >
-          Connect
-        </button>
-      ) : (
-        <div />
-      )}
-      {isConnection.pending ? (
-        <div>
-          <button
-            onClick={handleAccept}
-            className="btn btn-success"
-            style={styles.submit}
-          >
-            Accept
-          </button>
-          <button
-            onClick={handleReject}
-            className="btn btn-danger"
-            style={styles.submit}
-          >
-            Reject
-          </button>
-        </div>
-      ) : (
-        <div />
-      )}
+      <div className="row">
+        <CardContainer>
+          <h1>{company.companyName} </h1>
+          <h4>
+            {isConnection.company
+              ? ""
+              : isConnection.connection
+              ? "Connected"
+              : ""}
+          </h4>
 
-      <h1>Employees</h1>
-      <UsersList users={company.employees} />
+          {!isConnection.sent &&
+          !isConnection.pending & !isConnection.connection &&
+          isConnection.company ? (
+            <button
+              onClick={handleSend}
+              className="btn btn-primary"
+              style={styles.submit}
+            >
+              Connect
+            </button>
+          ) : (
+            <div />
+          )}
+          {isConnection.pending ? (
+            <div>
+              <button
+                onClick={handleAccept}
+                className="btn btn-success"
+                style={styles.submit}
+              >
+                Accept
+              </button>
+              <button
+                onClick={handleReject}
+                className="btn btn-danger"
+                style={styles.submit}
+              >
+                Reject
+              </button>
+            </div>
+          ) : (
+            <div />
+          )}
+        </CardContainer>
+      </div>
+
+      <CardContainer>
+        <h1>Employees</h1>
+        <UsersList users={company.employees} own={true} />
+      </CardContainer>
     </div>
   );
 };

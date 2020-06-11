@@ -76,7 +76,7 @@ export async function addUserToCompany(employeeId) {
     employee: employeeId,
   });
 
-  return response.data.message;
+  return response.data.success;
 }
 
 export default {

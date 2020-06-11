@@ -6,8 +6,9 @@ import { getAllUsers } from "../../actions/userActions";
 import Spinner from "../../components/spinner";
 import SearchForm from "../../components/forms/SearchForm";
 import UsersList from "../../components/user/UsersList";
+import { CardContainer } from "../../components/CardContainer";
 
-const UsersPAge = ({
+const UsersPage = ({
   loading,
   users,
   searching,
@@ -18,21 +19,30 @@ const UsersPAge = ({
     getAllUsers();
   }, []);
 
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <div className="container">
-      <h1>Users</h1>
-      <SearchForm />
-      <ul>
-        {searching ? (
-          <UsersList users={searchResult} />
+      <CardContainer>
+        <SearchForm />
+      </CardContainer>
+
+      <CardContainer>
+        <h1>Users</h1>
+        {loading ? (
+          <Spinner />
         ) : (
-          <UsersList users={users} />
+          <ul>
+            {searching ? (
+              <UsersList users={searchResult} />
+            ) : (
+              <UsersList users={users} />
+            )}
+          </ul>
         )}
-      </ul>
+      </CardContainer>
     </div>
   );
 };
@@ -44,4 +54,4 @@ const mapStateToProps = (state) => ({
   searching: state.userReducer.searching,
 });
 
-export default connect(mapStateToProps, { getAllUsers })(UsersPAge);
+export default connect(mapStateToProps, { getAllUsers })(UsersPage);

@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { CardContainer } from "../components/CardContainer";
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -11,7 +12,7 @@ const Landing = ({ isAuthenticated }) => {
   return (
     <section>
       <div className="container">
-        <div className="card" style={{ padding: 20, margin: 30 }}>
+        <CardContainer>
           <h1>Welcome,</h1>
           <p>Join our community today and start your journey</p>
           <div>
@@ -22,7 +23,7 @@ const Landing = ({ isAuthenticated }) => {
               Login
             </Link>
           </div>
-        </div>
+        </CardContainer>
       </div>
     </section>
   );
