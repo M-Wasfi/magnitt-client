@@ -10,6 +10,7 @@ import {
   GET_COMPANY,
   LOADING_COMPANIES,
   COMPANIES_REQUEST_FAILED,
+  UPDATE_COMPANY,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   companies: [],
   company: null,
   myCompany: null,
+  errors: null,
 };
 
 export default function (state = initialState, action) {
@@ -29,24 +31,36 @@ export default function (state = initialState, action) {
         loading: false,
         companies: payload,
       };
+
     case GET_COMPANY:
       return {
         ...state,
         loading: false,
         company: payload,
       };
+
     case GET_MY_COMPANY:
       return {
         ...state,
         loading: false,
         myCompany: payload,
       };
+
     case CREATE_COMPANY:
       return {
         ...state,
         loading: false,
         myCompany: payload,
       };
+
+    case UPDATE_COMPANY:
+      return {
+        ...state,
+        loading: false,
+        myCompany: payload,
+        errors: null,
+      };
+
     case SEND_CONNECTION_REQUEST:
       return {
         ...state,
@@ -56,6 +70,7 @@ export default function (state = initialState, action) {
           sentConnections: [...state.myCompany.sentConnections, payload],
         },
       };
+
     case ACCEPT_CONNECTION_REQUEST:
       return {
         ...state,
@@ -70,11 +85,13 @@ export default function (state = initialState, action) {
           ],
         },
       };
+
     case REJECT_CONNECTION_REQUEST:
       return {
         ...state,
         loading: false,
       };
+
     case ADD_USER_TO_COMPANY:
       return {
         ...state,
@@ -84,21 +101,25 @@ export default function (state = initialState, action) {
           employees: [...state.myCompany.employees, payload],
         },
       };
+
     case LOGOUT:
       return {
         ...state,
         loading: false,
         myCompany: null,
       };
+
     case LOADING_COMPANIES:
       return {
         ...state,
         loading: true,
       };
+
     case COMPANIES_REQUEST_FAILED:
       return {
         ...state,
         loading: false,
+        errors: payload,
       };
 
     default:

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { getAllUsers } from "../../actions/userActions";
 
-import Spinner from "../../components/spinner";
+import Spinner from "../../components/Spinner";
 import SearchForm from "../../components/forms/SearchForm";
 import UsersList from "../../components/user/UsersList";
 import { CardContainer } from "../../components/CardContainer";
@@ -18,10 +19,6 @@ const UsersPage = ({
   useEffect(() => {
     getAllUsers();
   }, [getAllUsers]);
-
-  // if (loading) {
-  //   return <Spinner />;
-  // }
 
   return (
     <div className="container">
@@ -45,6 +42,14 @@ const UsersPage = ({
       </CardContainer>
     </div>
   );
+};
+
+UsersPage.propTypes = {
+  users: PropTypes.array.isRequired,
+  searchResult: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  searching: PropTypes.bool.isRequired,
+  getAllUsers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

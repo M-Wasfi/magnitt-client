@@ -5,9 +5,7 @@ export const getStatus = (company, companyId) => {
     sent: false,
     company: true,
   };
-  //   console.log(company._id);
-  console.log(companyId);
-  console.log(company);
+
   if (company === null) {
     connectionStatus = {
       pending: false,
@@ -27,12 +25,6 @@ export const getStatus = (company, companyId) => {
     const pen = company.pendingConnections.some(
       (com) => com._id === companyId || com === companyId
     );
-    console.log(
-      company.companyConnections.some((com) => com._id === companyId)
-    );
-    console.log(con);
-    console.log(sent);
-    console.log(pen);
 
     if (con) {
       connectionStatus = {

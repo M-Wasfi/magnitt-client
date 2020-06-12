@@ -1,6 +1,12 @@
 import React from "react";
+import { ToastContainer } from "react-toastify";
 import { Route, Switch } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
+import PrivateRoute from "./PrivateRoute";
+import AppContainer from "../components/AppContainer";
+
+import Landing from "../pages/Landing";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/auth_pages/LoginPage";
 import SignupPage from "../pages/auth_pages/SignupPage";
@@ -10,13 +16,9 @@ import UserPage from "../pages/user/UserPage";
 import CompanyPage from "../pages/company/CompanyPage";
 import MyCompanyPage from "../pages/company/MyCompanyPage";
 import CreateCompanyPage from "../pages/company/CreateCompanyPage";
-
-import AppContainer from "../components/AppContainer";
-import PrivateRoute from "./PrivateRoute";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Landing from "../pages/Landing";
 import ProfilePage from "../pages/user/ProfilePage";
+import EditProfilePage from "../pages/user/EditProfilePage";
+import EditCompanyPage from "../pages/company/EditCompanyPage";
 
 export default function Routes() {
   return (
@@ -34,12 +36,22 @@ export default function Routes() {
           <PrivateRoute exact path="/my-company" component={MyCompanyPage} />
           <PrivateRoute
             exact
+            path="/edit-company"
+            component={EditCompanyPage}
+          />
+          <PrivateRoute
+            exact
             path="/add-company"
             component={CreateCompanyPage}
           />
           <Route exact path="/users" component={UsersPage} />
           <Route exact path="/user" component={UserPage} />
           <PrivateRoute exact path="/profile" component={ProfilePage} />
+          <PrivateRoute
+            exact
+            path="/edit-profile"
+            component={EditProfilePage}
+          />
         </AppContainer>
 
         {/* redirect user to Login page if route does not exist and user is not authenticated */}

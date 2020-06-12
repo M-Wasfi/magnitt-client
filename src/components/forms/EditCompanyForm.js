@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import { createCompany } from "../../actions/companyActions";
+import { updateCompany } from "../../actions/companyActions";
 
 import { CompanyForm } from "./CompanyForm";
 
-const AddCompanyForm = ({ myCompany, createCompany, errors }) => {
+const EditCompanyForm = ({ myCompany, updateCompany, errors, loading }) => {
   const [company, setCompany] = useState({
     companyName: "",
     industry: "",
@@ -16,16 +16,27 @@ const AddCompanyForm = ({ myCompany, createCompany, errors }) => {
     size: 0,
   });
 
+  const [updated, setUpdated] = useState(false);
+
+  useEffect(() => {
+    setCompany({
+      companyName: myCompany.companyName,
+      industry: myCompany.industry,
+      type: myCompany.type,
+      size: myCompany.size,
+    });
+  }, [setCompany, myCompany]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createCompany(company);
+    updateCompany({ ...company, _id: myCompany._id }).then(setUpdated(true));
   };
 
   const handleChange = (e) => {
     setCompany({ ...company, [e.target.name]: e.target.value });
   };
 
-  if (myCompany) {
+  if (updated && !loading && !errors) {
     return <Redirect to="/my-company" />;
   }
 
@@ -39,8 +50,9 @@ const AddCompanyForm = ({ myCompany, createCompany, errors }) => {
   );
 };
 
-AddCompanyForm.propTypes = {
-  createCompany: PropTypes.func.isRequired,
+EditCompanyForm.propTypes = {
+  updateCompany: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   myCompany: PropTypes.object.isRequired,
 };
@@ -48,6 +60,7 @@ AddCompanyForm.propTypes = {
 const mapStateToProps = (state) => ({
   myCompany: state.companyReducer.myCompany,
   errors: state.companyReducer.errors,
+  loading: state.companyReducer.loading,
 });
 
-export default connect(mapStateToProps, { createCompany })(AddCompanyForm);
+export default connect(mapStateToProps, { updateCompany })(EditCompanyForm);

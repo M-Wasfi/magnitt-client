@@ -1,11 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import {
   acceptConnectionRequest,
   rejectConnectionRequest,
 } from "../../actions/companyActions";
-import { EmptyList } from "../emptyList";
+
+import { EmptyList } from "../EmptyList";
 
 const CompaniesList = ({
   companies,
@@ -20,7 +24,7 @@ const CompaniesList = ({
   const handleReject = (company) => {
     rejectConnectionRequest(company);
   };
-
+  //TODO table refactor
   return companies.length > 0 ? (
     <table className="table table-striped">
       <thead>
@@ -77,23 +81,14 @@ const CompaniesList = ({
   );
 };
 
+CompaniesList.propTypes = {
+  acceptConnectionRequest: PropTypes.func,
+  rejectConnectionRequest: PropTypes.func,
+  companies: PropTypes.array,
+  pending: PropTypes.bool,
+};
+
 export default connect(null, {
   acceptConnectionRequest,
   rejectConnectionRequest,
 })(CompaniesList);
-
-// companies.map((company) => (
-//   <li key={company._id}>
-//     <Link
-//       to={{
-//         pathname: "/company",
-//         state: {
-//           company: company,
-//         },
-//       }}
-//     >
-//       {company.companyName}
-//     </Link>
-
-//   </li>
-// ));

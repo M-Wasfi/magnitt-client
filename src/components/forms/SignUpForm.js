@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-import { register } from "../../actions/authActions";
 import { toast } from "react-toastify";
+
+import { register } from "../../actions/authActions";
+
+import { Input } from "./common/Input";
 import { CardContainer } from "../CardContainer";
 
 const SignupForm = ({ isAuthenticated, register, errors }) => {
@@ -10,20 +15,15 @@ const SignupForm = ({ isAuthenticated, register, errors }) => {
     userName: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    password_confirmation: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (user.password !== user.confirmPassword) {
+    if (user.password !== user.password_confirmation) {
       toast.error("Passwords do not match");
     } else {
-      const data = {
-        userName: user.userName,
-        email: user.email,
-        password: user.password,
-      };
-      register(data);
+      register(user);
     }
   };
 
@@ -38,65 +38,41 @@ const SignupForm = ({ isAuthenticated, register, errors }) => {
   return (
     <CardContainer>
       <form style={styles.form} onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input
-            required
-            type="text"
-            className="form-control"
-            name="userName"
-            value={user.userName}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors && errors.userName ? (
-            <p style={{ color: "red", fontSize: 12 }}>{errors.userName}</p>
-          ) : null}
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email address</label>
-          <input
-            required
-            type="email"
-            className="form-control"
-            name="email"
-            value={user.email}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors && errors.email ? (
-            <p style={{ color: "red", fontSize: 12 }}>{errors.email}</p>
-          ) : null}
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            required
-            type="password"
-            className="form-control"
-            name="password"
-            value={user.password}
-            onChange={(e) => handleChange(e)}
-          />
-          <small id="passwordHelpBlock" class="form-text text-muted">
-            Your password must be 8-20 characters long
-          </small>
-          {errors && errors.password ? (
-            <p style={{ color: "red", fontSize: 12 }}>{errors.password}</p>
-          ) : null}
-        </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm password</label>
-          <input
-            required
-            type="password"
-            className="form-control"
-            name="confirmPassword"
-            value={user.confirmPassword}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors && errors.password ? (
-            <p style={{ color: "red", fontSize: 12 }}>{errors.password}</p>
-          ) : null}
-        </div>
+        <Input
+          label="Name"
+          type="text"
+          name="userName"
+          value={user.userName}
+          handleChange={handleChange}
+          errors={errors}
+        />
+
+        <Input
+          label="Email address"
+          type="email"
+          name="email"
+          value={user.email}
+          handleChange={handleChange}
+          errors={errors}
+        />
+
+        <Input
+          label="Password"
+          type="password"
+          name="password"
+          value={user.password}
+          handleChange={handleChange}
+          errors={errors}
+        />
+
+        <Input
+          label="Confirm password"
+          type="password"
+          name="password_confirmation"
+          value={user.password_confirmation}
+          handleChange={handleChange}
+          errors={errors}
+        />
 
         <button type="submit" className="btn btn-primary" style={styles.submit}>
           Signup
@@ -107,6 +83,12 @@ const SignupForm = ({ isAuthenticated, register, errors }) => {
       </p>
     </CardContainer>
   );
+};
+
+SignupForm.propTypes = {
+  isAuthenticated: PropTypes.string.isRequired,
+  register: PropTypes.func.isRequired,
+  errors: PropTypes.object,
 };
 
 const styles = {

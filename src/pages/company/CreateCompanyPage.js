@@ -4,12 +4,10 @@ import { CardContainer } from "../../components/CardContainer";
 
 const CreateCompanyPage = () => {
   return (
-    // <div className="container">
     <CardContainer>
-      <h1>Create Company Profile</h1>
+      <h2>Create Company Profile</h2>
       <AddCompanyForm />
     </CardContainer>
-    // </div>
   );
 };
 

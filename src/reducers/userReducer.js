@@ -28,12 +28,14 @@ export default function (state = initialState, action) {
         loading: false,
         users: payload,
       };
+
     case GET_USER:
       return {
         ...state,
         loading: false,
         user: payload,
       };
+
     case SEARCH_USERS:
       return {
         ...state,
@@ -41,38 +43,45 @@ export default function (state = initialState, action) {
         searchResult: payload,
         searching: true,
       };
+
     case CANCEL_SEARCH:
       return {
         ...state,
         loading: false,
         searching: false,
       };
+
     case ADD_COMPANY_TO_USER:
       return {
         ...state,
         user: { ...state.user, company: payload },
       };
+
     case GET_PROFILE:
       return {
         ...state,
         loading: false,
         profile: payload,
       };
+
     case LOGOUT:
       return {
         ...state,
         loading: false,
       };
+
     case LOADING_USERS:
       return {
         ...state,
         loading: true,
       };
+
     case USERS_REQUEST_FAILED:
       return {
         ...state,
         loading: false,
       };
+
     default:
       return state;
   }

@@ -1,14 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { Link } from "react-router-dom";
 
+import { EmptyList } from "../EmptyList";
+
 export default function UsersList({ users, own = false }) {
-  return (
+  return users.length > 0 ? (
     <table className="table table-striped">
       <thead>
         <tr>
           <th scope="col">Name</th>
           {!own ? <th scope="col">Company</th> : null}
-          {/* <th scope="col">Company</th> */}
           <th scope="col">Email</th>
         </tr>
       </thead>
@@ -52,5 +55,12 @@ export default function UsersList({ users, own = false }) {
         ))}
       </tbody>
     </table>
+  ) : (
+    <EmptyList />
   );
 }
+
+UsersList.propTypes = {
+  own: PropTypes.bool,
+  users: PropTypes.array.isRequired,
+};

@@ -6,6 +6,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   AUTHENTICATING,
+  UPDATE_PROFILE,
+  CREATE_COMPANY,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -20,11 +22,21 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case LOGOUT:
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+      };
+
     case AUTHENTICATING:
       return {
         ...state,
         loading: true,
       };
+
     case USER_LOADED:
       return {
         ...state,
@@ -32,6 +44,7 @@ export default function (state = initialState, action) {
         loading: false,
         user: payload,
       };
+
     case REGISTER_SUCCESS:
       return {
         ...state,
@@ -40,6 +53,7 @@ export default function (state = initialState, action) {
         user: payload.user,
         token: payload.token,
       };
+
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -49,26 +63,34 @@ export default function (state = initialState, action) {
         token: payload.token,
       };
 
-    case LOGOUT:
+    case UPDATE_PROFILE:
       return {
         ...state,
-        token: null,
-        isAuthenticated: false,
         loading: false,
-        user: null,
+        errors: null,
+        user: payload,
       };
+
+    case CREATE_COMPANY:
+      return {
+        ...state,
+        user: { ...state.user, company: payload._id },
+      };
+
     case LOGIN_FAIL:
       return {
         ...state,
         loading: false,
         errors: payload,
       };
+
     case REGISTER_FAIL:
       return {
         ...state,
         loading: false,
         errors: payload,
       };
+
     default:
       return state;
   }

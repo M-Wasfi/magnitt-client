@@ -1,7 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import UsersList from "../../components/user/UsersList";
 import { CardContainer } from "../../components/CardContainer";
+
+import { CompanyInfo } from "./common/CompanyInfo";
 
 export const CompanyProfile = ({
   company,
@@ -15,9 +18,10 @@ export const CompanyProfile = ({
   isAuthenticated,
 }) => {
   return (
+    //TODO Review
     <div className="container">
-      <div className="row">
-        <CardContainer>
+      <CardContainer>
+        <div style={styles.row}>
           <h1>{company.companyName} </h1>
           {isAuthenticated ? (
             <h4>
@@ -76,8 +80,12 @@ export const CompanyProfile = ({
               <div />
             )
           ) : null}
-        </CardContainer>
-      </div>
+        </div>
+      </CardContainer>
+
+      <CardContainer>
+        <CompanyInfo company={company} />
+      </CardContainer>
 
       <CardContainer>
         <h1>Employees</h1>
@@ -87,7 +95,24 @@ export const CompanyProfile = ({
   );
 };
 
+CompanyProfile.propTypes = {
+  company: PropTypes.object,
+  con: PropTypes.object,
+  myCompany: PropTypes.object,
+  userId: PropTypes.string,
+  otherCompanyId: PropTypes.string,
+  handleSend: PropTypes.func,
+  handleAccept: PropTypes.func,
+  handleReject: PropTypes.func,
+  isAuthenticated: PropTypes.bool,
+};
+
 const styles = {
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   submit: {
     margin: 3,
   },

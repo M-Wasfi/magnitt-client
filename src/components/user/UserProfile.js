@@ -1,30 +1,44 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { CardContainer } from "../CardContainer";
-import { EmptyList } from "../emptyList";
+
 import { Link } from "react-router-dom";
 
-export const UserProfile = ({ user, handleAdd }) => {
+import { CompanyInfo } from "../company/common/CompanyInfo";
+
+import { CardContainer } from "../CardContainer";
+import { EmptyList } from "../EmptyList";
+import { UserInfo } from "./common/UserInfo";
+
+const UserProfile = ({ user, handleAdd, own, isAuthenticated, hasCompany }) => {
   return (
     <div className="container">
       <CardContainer>
         <div style={styles.row}>
           <h2>{user.userName}</h2>
-          {user.company !== null ? null : (
+          {!isAuthenticated || !hasCompany ? null : user.company ||
+            own ? null : (
             <button onClick={handleAdd} className="btn btn-primary">
               Add to company
             </button>
+          )}
+          {!own ? null : (
+            <Link
+              to={{
+                pathname: "/edit-profile",
+                state: {
+                  user: user,
+                },
+              }}
+              className="btn btn-primary"
+            >
+              Edit
+            </Link>
           )}
         </div>
       </CardContainer>
 
       <CardContainer>
-        <h2>Info</h2>
-        <ul>
-          <li>Name: {user.userName}</li>
-          <li>Email: {user.email}</li>
-          <li>Join Date: {user.creationDate}</li>
-        </ul>
+        <UserInfo user={(user.userName, user.email, user.creationDate)} />
       </CardContainer>
 
       <CardContainer>
@@ -47,12 +61,7 @@ export const UserProfile = ({ user, handleAdd }) => {
                 {user.company.companyName}
               </Link>
             </h2>
-            <ul>
-              <li>Type: {user.company.type}</li>
-              <li>Size: {user.company.size}</li>
-              <li>Industry: {user.company.Industry}</li>
-              <li>Join Date: {user.company.creationDate}</li>
-            </ul>
+            <CompanyInfo company={user.company} />
           </>
         )}
       </CardContainer>
@@ -62,6 +71,9 @@ export const UserProfile = ({ user, handleAdd }) => {
 
 UserProfile.propTypes = {
   user: PropTypes.object.isRequired,
+  own: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
+  hasCompany: PropTypes.bool.isRequired,
   handleAdd: PropTypes.func.isRequired,
 };
 
@@ -72,3 +84,5 @@ const styles = {
     justifyContent: "space-between",
   },
 };
+
+export default UserProfile;

@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+
 import { connect } from "react-redux";
+
 import {
   getCompany,
   sendConnectionRequest,
   acceptConnectionRequest,
   rejectConnectionRequest,
 } from "../../actions/companyActions";
-import Spinner from "../../components/spinner";
+
 import { getStatus } from "../../helpers/getStatus";
+
+import Spinner from "../../components/Spinner";
 import { CompanyProfile } from "../../components/company/CompanyProfile";
 
 const CompanyPage = ({
   location,
+  isAuthenticated,
+  loading,
+  user,
+  myCompany,
+  company,
   sendConnectionRequest,
   acceptConnectionRequest,
   rejectConnectionRequest,
-  user,
-  isAuthenticated,
-  myCompany,
-  company,
   getCompany,
-  loading,
 }) => {
   const [isConnection, setIsConnection] = useState({
     pending: false,
@@ -68,6 +73,19 @@ const CompanyPage = ({
       isAuthenticated={isAuthenticated}
     />
   );
+};
+
+CompanyPage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  myCompany: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  sendConnectionRequest: PropTypes.func.isRequired,
+  acceptConnectionRequest: PropTypes.func.isRequired,
+  rejectConnectionRequest: PropTypes.func.isRequired,
+  getCompany: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

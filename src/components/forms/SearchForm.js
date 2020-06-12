@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+
 import { connect } from "react-redux";
+
 import { searchUsers, cancelSearch } from "../../actions/userActions";
+
+import { Input } from "./common/Input";
 
 const SearchForm = ({ searchUsers, cancelSearch }) => {
   const [search, setSearch] = useState("");
@@ -21,23 +26,21 @@ const SearchForm = ({ searchUsers, cancelSearch }) => {
   };
 
   return (
-    <div style={{ flexDirection: "row" }}>
+    <div>
       <form style={styles.form} onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Search</label>
-          <input
-            type="text"
-            className="form-control"
-            name="search"
-            placeholder="Search by email"
-            value={search}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
+        <Input
+          label="Search"
+          type="text"
+          name="search"
+          placeholder="Search by email"
+          value={search}
+          handleChange={handleChange}
+        />
 
         <button type="submit" className="btn btn-primary" style={styles.submit}>
           Search
         </button>
+
         <button
           onClick={handleCancel}
           className="btn btn-danger"
@@ -48,6 +51,11 @@ const SearchForm = ({ searchUsers, cancelSearch }) => {
       </form>
     </div>
   );
+};
+
+SearchForm.propTypes = {
+  searchUsers: PropTypes.func.isRequired,
+  cancelSearch: PropTypes.func.isRequired,
 };
 
 const styles = {

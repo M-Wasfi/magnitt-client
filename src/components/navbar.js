@@ -1,6 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
 import { logout } from "../actions/authActions";
 
 const Navbar = ({ logout, user, isAuthenticated }) => {
@@ -11,8 +14,9 @@ const Navbar = ({ logout, user, isAuthenticated }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary sticky-top ">
       <Link className="navbar-brand" to="/home">
-        Project
+        Magnitt Connect
       </Link>
+
       <button
         className="navbar-toggler"
         type="button"
@@ -73,11 +77,7 @@ const Navbar = ({ logout, user, isAuthenticated }) => {
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
             {isAuthenticated ? (
-              <button
-                className="btn btn-sm btn-danger"
-                // style={{ color: "#fff" }}
-                onClick={handleLogout}
-              >
+              <button className="btn btn-sm btn-danger" onClick={handleLogout}>
                 Sign out
               </button>
             ) : (
@@ -92,39 +92,15 @@ const Navbar = ({ logout, user, isAuthenticated }) => {
   );
 };
 
+Navbar.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   user: state.authReducer.user,
   isAuthenticated: state.authReducer.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
-
-// <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-//         <Link className="navbar-brand col-md-3 col-lg-2 mr-0 px-3" to="#">
-//           Company name
-//         </Link>
-//         <button
-//           className="navbar-toggler position-absolute d-md-none collapsed"
-//           type="button"
-//           data-toggle="collapse"
-//           data-target="#sidebarMenu"
-//           aria-controls="sidebarMenu"
-//           aria-expanded="false"
-//           aria-label="Toggle navigation"
-//         >
-//           <span className="navbar-toggler-icon"></span>
-//         </button>
-//         <input
-//           className="form-control form-control-dark w-100"
-//           type="text"
-//           placeholder="Search"
-//           aria-label="Search"
-//         />
-//         <ul className="navbar-nav px-3">
-//           <li className="nav-item text-nowrap">
-//             <Link className="nav-link" to="#">
-//               Sign out
-//             </Link>
-//           </li>
-//         </ul>
-//       </nav>

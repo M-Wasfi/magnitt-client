@@ -5,6 +5,7 @@ import { apiUrl } from "../config.json";
 const endpoint = apiUrl + "/companies";
 const user = getCurrentUser();
 
+// @desc    Get all companies
 export async function getCompanies() {
   const response = await http.get(endpoint);
 
@@ -13,6 +14,7 @@ export async function getCompanies() {
   return companies;
 }
 
+// @desc    Get company by id
 export async function getCompany(companyId) {
   const response = await http.get(endpoint + `/${companyId}`);
   const company = response.data.data;
@@ -20,6 +22,7 @@ export async function getCompany(companyId) {
   return company;
 }
 
+// @desc    Get logged in user's company
 export async function getMyCompany() {
   const response = await http.get(endpoint + "/my-company");
   const company = response.data.data;
@@ -27,6 +30,7 @@ export async function getMyCompany() {
   return company;
 }
 
+// @desc    Create new company
 export async function createCompany(company) {
   const body = { ...company, owner: user.id };
 
@@ -37,16 +41,23 @@ export async function createCompany(company) {
   return newCompany;
 }
 
-export function updateCompany(company) {
+// @desc    Update company by id
+export async function updateCompany(company) {
   const body = { ...company };
 
-  return http.put(endpoint + `/${company._id}`, body);
+  const response = await http.put(endpoint + `/${company._id}`, body);
+
+  const updatedCompany = response.data.data;
+
+  return updatedCompany;
 }
 
+// @desc    Delete company by id
 export function deleteCompany(companyId) {
   return http.delete(endpoint + `/${companyId}`);
 }
 
+// @desc    Send connection request to company by id
 export async function sendConnectionRequest(companyId) {
   const response = await http.post(endpoint + "/connections/send", {
     company: companyId,
@@ -55,6 +66,7 @@ export async function sendConnectionRequest(companyId) {
   return response.data.message;
 }
 
+// @desc    Accept connection request of company by id
 export async function acceptConnectionRequest(companyId) {
   const response = await http.post(endpoint + "/connections/accept", {
     company: companyId,
@@ -63,6 +75,7 @@ export async function acceptConnectionRequest(companyId) {
   return response.data.message;
 }
 
+// @desc    Reject connection request of company by id
 export async function rejectConnectionRequest(companyId) {
   const response = await http.post(endpoint + "/connections/reject", {
     company: companyId,
@@ -71,6 +84,7 @@ export async function rejectConnectionRequest(companyId) {
   return response.data.message;
 }
 
+// @desc    Add user to company by id
 export async function addUserToCompany(employeeId) {
   const response = await http.post(endpoint + "/employee", {
     employee: employeeId,

@@ -36,7 +36,6 @@ export const getAllUsers = () => async (dispatch) => {
   } catch (err) {
     dispatch(failed());
 
-    // const error = err.response.data.message;
     toast.error(err);
   }
 };
@@ -55,6 +54,7 @@ export const getUser = (userId) => async (dispatch) => {
     dispatch(failed());
 
     const error = err.response.data.message;
+
     toast.error(error);
   }
 };

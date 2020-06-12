@@ -11,6 +11,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   AUTHENTICATING,
+  UPDATE_PROFILE,
 } from "./actionTypes";
 
 const loading = () => (dispatch) => {
@@ -34,6 +35,7 @@ export const login = (email, password) => async (dispatch) => {
     });
   } catch (err) {
     const error = err.response.data.data.errors;
+
     toast.error(err.response.data.message);
 
     dispatch({
@@ -58,6 +60,7 @@ export const register = (userData) => async (dispatch) => {
     });
   } catch (err) {
     const error = err.response.data.data.errors;
+
     toast.error(err.response.data.message);
 
     dispatch({
@@ -72,13 +75,12 @@ export const logout = () => async (dispatch) => {
   try {
     loading();
 
-    await auth.logout();
+    auth.logout();
 
     toast.success("User logged out");
 
     dispatch({ type: LOGOUT });
   } catch (err) {
-    // const error = err.response.data.message;
     toast.error(err);
 
     dispatch({
@@ -101,6 +103,31 @@ export const loadUser = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
+    });
+  }
+};
+
+// Update User Profile
+export const updateProfile = (userData) => async (dispatch) => {
+  try {
+    loading();
+
+    const user = await auth.updateProfile(userData);
+
+    toast.success("User profile updated");
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: user,
+    });
+  } catch (err) {
+    const error = err.response.data.data.errors;
+
+    toast.error(err.response.data.message);
+
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: error,
     });
   }
 };

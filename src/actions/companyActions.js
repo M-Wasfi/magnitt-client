@@ -14,6 +14,7 @@ import {
   COMPANIES_REQUEST_FAILED,
   LOADING_COMPANIES,
   ADD_COMPANY_TO_USER,
+  UPDATE_COMPANY,
 } from "./actionTypes";
 
 export function loading() {
@@ -40,7 +41,9 @@ export const getAllCompanies = () => async (dispatch) => {
     });
   } catch (err) {
     dispatch(failed());
+
     const error = err;
+
     toast.error(error);
   }
 };
@@ -57,7 +60,7 @@ export const getCompany = (companyId) => async (dispatch) => {
     });
   } catch (err) {
     dispatch(failed());
-    // const error = err.response.data.message;
+
     toast.error(err);
   }
 };
@@ -75,7 +78,6 @@ export const getMyCompany = () => async (dispatch) => {
   } catch (err) {
     dispatch(failed());
 
-    // const error = err.response.data.message;
     toast.error(err);
   }
 };
@@ -93,29 +95,58 @@ export const createCompany = (companyData) => async (dispatch) => {
       payload: company,
     });
   } catch (err) {
-    dispatch(failed());
+    const error = err.response.data.data.errors;
 
-    // const error = err.response.data.message;
-    toast.error(err);
+    toast.error(err.response.data.message);
+
+    dispatch({
+      type: COMPANIES_REQUEST_FAILED,
+      payload: error,
+    });
   }
 };
 
-export const sendConnectionRequest = (companyId) => async (dispatch) => {
+export const updateCompany = (companyData) => async (dispatch) => {
   try {
     dispatch(loading());
 
-    await api.sendConnectionRequest(companyId);
+    const company = await api.updateCompany(companyData);
+
+    toast.success("Company updated");
+
+    dispatch({
+      type: UPDATE_COMPANY,
+      payload: company,
+    });
+  } catch (err) {
+    const error = err.response.data.data.errors;
+
+    toast.error(err.response.data.message);
+
+    dispatch({
+      type: COMPANIES_REQUEST_FAILED,
+      payload: error,
+    });
+  }
+};
+
+export const sendConnectionRequest = (company) => async (dispatch) => {
+  try {
+    dispatch(loading());
+
+    await api.sendConnectionRequest(company._id);
 
     toast.success("Connection request sent");
 
     dispatch({
       type: SEND_CONNECTION_REQUEST,
-      payload: companyId,
+      payload: company,
     });
   } catch (err) {
     dispatch(failed());
 
     const error = err.response.data.message;
+
     toast.error(error);
   }
 };
@@ -136,6 +167,7 @@ export const acceptConnectionRequest = (company) => async (dispatch) => {
     dispatch(failed());
 
     const error = err.response.data.message;
+
     toast.error(error);
   }
 };
@@ -156,11 +188,12 @@ export const rejectConnectionRequest = (company) => async (dispatch) => {
     dispatch(failed());
 
     const error = err.response.data.message;
+
     toast.error(error);
   }
 };
 
-export const addUserToCompany = (employeeId, companyId) => async (dispatch) => {
+export const addUserToCompany = (employeeId, company) => async (dispatch) => {
   try {
     dispatch(loading());
 
@@ -175,12 +208,13 @@ export const addUserToCompany = (employeeId, companyId) => async (dispatch) => {
 
     dispatch({
       type: ADD_COMPANY_TO_USER,
-      payload: companyId,
+      payload: company,
     });
   } catch (err) {
     dispatch(failed());
 
     const error = err.response.data.message;
+
     toast.error(error);
   }
 };
