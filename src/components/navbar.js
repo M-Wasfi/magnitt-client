@@ -81,9 +81,18 @@ const Navbar = ({ logout, user, isAuthenticated }) => {
                 Sign out
               </button>
             ) : (
-              <Link className="btn btn-sm btn-success" to="/login">
-                Login
-              </Link>
+              <>
+                <Link
+                  className="btn btn-sm btn-success"
+                  to="/login"
+                  style={{ marginRight: 4 }}
+                >
+                  Login
+                </Link>
+                <Link className="btn btn-sm btn-danger" to="/register">
+                  Register
+                </Link>
+              </>
             )}
           </li>
         </ul>

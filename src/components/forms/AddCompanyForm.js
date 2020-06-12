@@ -8,7 +8,7 @@ import { createCompany } from "../../actions/companyActions";
 
 import { CompanyForm } from "./CompanyForm";
 
-const AddCompanyForm = ({ myCompany, createCompany, errors }) => {
+const AddCompanyForm = ({ myCompany, createCompany, errors, user }) => {
   const [company, setCompany] = useState({
     companyName: "",
     industry: "",
@@ -18,7 +18,7 @@ const AddCompanyForm = ({ myCompany, createCompany, errors }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createCompany(company);
+    createCompany(company, user._id);
   };
 
   const handleChange = (e) => {
@@ -43,11 +43,13 @@ AddCompanyForm.propTypes = {
   createCompany: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   myCompany: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   myCompany: state.companyReducer.myCompany,
   errors: state.companyReducer.errors,
+  user: state.authReducer.user,
 });
 
 export default connect(mapStateToProps, { createCompany })(AddCompanyForm);

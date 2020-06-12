@@ -83,11 +83,11 @@ export const getMyCompany = () => async (dispatch) => {
   }
 };
 
-export const createCompany = (companyData) => async (dispatch) => {
+export const createCompany = (companyData, userId) => async (dispatch) => {
   try {
     dispatch(loading());
 
-    const company = await api.createCompany(companyData);
+    const company = await api.createCompany(companyData, userId);
 
     toast.success("Company created");
 

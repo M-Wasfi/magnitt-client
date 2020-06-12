@@ -7,7 +7,7 @@ import Routes from "./routes";
 import store from "./store";
 import { Provider } from "react-redux";
 import { loadUser } from "./actions/authActions";
-import { getMyCompany } from "./actions/companyActions";
+import { getMyCompany, getCompanyConnections } from "./actions/companyActions";
 
 import methods from "./api/httpService";
 
@@ -21,6 +21,7 @@ const App = () => {
     methods.setJwt(token);
     store.dispatch(loadUser());
     store.dispatch(getMyCompany());
+    store.dispatch(getCompanyConnections());
   }, []);
 
   return (

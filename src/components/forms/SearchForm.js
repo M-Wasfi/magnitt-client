@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { searchUsers, cancelSearch } from "../../actions/userActions";
 
 import { Input } from "./common/Input";
+import { Button } from "../common/Button";
 
 const SearchForm = ({ searchUsers, cancelSearch }) => {
   const [search, setSearch] = useState("");
@@ -37,17 +38,8 @@ const SearchForm = ({ searchUsers, cancelSearch }) => {
           handleChange={handleChange}
         />
 
-        <button type="submit" className="btn btn-primary" style={styles.submit}>
-          Search
-        </button>
-
-        <button
-          onClick={handleCancel}
-          className="btn btn-danger"
-          style={styles.submit}
-        >
-          Clear
-        </button>
+        <Button style="btn btn-primary" label="Search" type="submit" />
+        <Button style="btn btn-danger" label="Clear" onClick={handleCancel} />
       </form>
     </div>
   );

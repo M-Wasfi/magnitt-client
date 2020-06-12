@@ -8,6 +8,7 @@ import { getAllCompanies } from "../../actions/companyActions";
 import Spinner from "../../components/Spinner";
 import CompaniesGrid from "../../components/company/CompaniesGrid";
 import { CardContainer } from "../../components/CardContainer";
+import { EmptyList } from "../../components/EmptyList";
 
 const CompaniesPage = ({ companies, loading, getAllCompanies }) => {
   useEffect(() => {
@@ -21,7 +22,11 @@ const CompaniesPage = ({ companies, loading, getAllCompanies }) => {
   return (
     <CardContainer>
       <h1>Companies</h1>
-      <CompaniesGrid companies={companies} />
+      {companies.length > 0 ? (
+        <CompaniesGrid companies={companies} />
+      ) : (
+        <EmptyList />
+      )}
     </CardContainer>
   );
 };

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { CardContainer } from "../CardContainer";
 import { Input } from "./common/Input";
+import { Button } from "../common/Button";
 
 export const CompanyForm = ({
   handleSubmit,
@@ -15,7 +16,7 @@ export const CompanyForm = ({
     <CardContainer>
       <form style={styles.form} onSubmit={handleSubmit}>
         <Input
-          label="Company's Name<"
+          label="Company's Name"
           type="text"
           name="companyName"
           placeholder="Company's Name"
@@ -25,7 +26,7 @@ export const CompanyForm = ({
         />
 
         <Input
-          label="Type<"
+          label="Type"
           type="text"
           name="type"
           placeholder="Type"
@@ -35,7 +36,7 @@ export const CompanyForm = ({
         />
 
         <Input
-          label="Size<"
+          label="Size"
           type="text"
           name="size"
           placeholder="Size"
@@ -45,7 +46,7 @@ export const CompanyForm = ({
         />
 
         <Input
-          label="Industry<"
+          label="Industry"
           type="text"
           name="industry"
           placeholder="Industry"
@@ -54,9 +55,7 @@ export const CompanyForm = ({
           errors={errors}
         />
 
-        <button type="submit" className="btn btn-primary" style={styles.submit}>
-          Submit
-        </button>
+        <Button style="btn btn-primary" label="Submit" type="submit" />
       </form>
     </CardContainer>
   );

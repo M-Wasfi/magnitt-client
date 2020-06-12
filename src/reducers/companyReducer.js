@@ -48,6 +48,13 @@ export default function (state = initialState, action) {
         myCompany: payload,
       };
 
+    case GET_CONNECTIONS_REQUEST:
+      return {
+        ...state,
+        loading: false,
+        connections: payload,
+      };
+
     case CREATE_COMPANY:
       return {
         ...state,

@@ -10,7 +10,7 @@ import {
   rejectConnectionRequest,
 } from "../../actions/companyActions";
 
-import { getStatus } from "../../helpers/getStatus";
+import { getStatusNew } from "../../helpers/getStatus";
 
 import Spinner from "../../components/Spinner";
 import { CompanyProfile } from "../../components/company/CompanyProfile";
@@ -22,27 +22,21 @@ const CompanyPage = ({
   user,
   myCompany,
   company,
+  connections,
   sendConnectionRequest,
   acceptConnectionRequest,
   rejectConnectionRequest,
   getCompany,
 }) => {
-  const [isConnection, setIsConnection] = useState({
-    pending: false,
-    connection: false,
-    sent: false,
-    company: true,
-  });
+  const [status, setStatus] = useState({});
 
   const otherCompanyId = location.state.company._id;
 
   useEffect(() => {
     getCompany(otherCompanyId);
 
-    const connectionStatus = getStatus(myCompany, otherCompanyId);
-
-    setIsConnection(connectionStatus);
-  }, [getCompany, otherCompanyId, myCompany]);
+    setStatus(getStatusNew(myCompany._id, otherCompanyId, connections));
+  }, [getStatusNew, otherCompanyId, myCompany, connections]);
 
   const handleSend = (company) => {
     sendConnectionRequest(company);
@@ -62,7 +56,7 @@ const CompanyPage = ({
 
   return (
     <CompanyProfile
-      con={isConnection}
+      conStatus={status}
       company={company}
       otherCompanyId={otherCompanyId}
       myCompany={myCompany}
@@ -81,6 +75,7 @@ CompanyPage.propTypes = {
   location: PropTypes.object.isRequired,
   myCompany: PropTypes.object.isRequired,
   company: PropTypes.object.isRequired,
+  connections: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   sendConnectionRequest: PropTypes.func.isRequired,
   acceptConnectionRequest: PropTypes.func.isRequired,
@@ -91,6 +86,7 @@ CompanyPage.propTypes = {
 const mapStateToProps = (state) => ({
   myCompany: state.companyReducer.myCompany,
   company: state.companyReducer.company,
+  connections: state.companyReducer.connections,
   loading: state.companyReducer.loading,
   user: state.authReducer.user,
   isAuthenticated: state.authReducer.isAuthenticated,

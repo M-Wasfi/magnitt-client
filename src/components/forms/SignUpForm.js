@@ -9,6 +9,7 @@ import { register } from "../../actions/authActions";
 
 import { Input } from "./common/Input";
 import { CardContainer } from "../CardContainer";
+import { Button } from "../common/Button";
 
 const SignupForm = ({ isAuthenticated, register, errors }) => {
   const [user, setUser] = useState({
@@ -74,9 +75,7 @@ const SignupForm = ({ isAuthenticated, register, errors }) => {
           errors={errors}
         />
 
-        <button type="submit" className="btn btn-primary" style={styles.submit}>
-          Signup
-        </button>
+        <Button style="btn btn-primary" label="Signup" type="submit" />
       </form>
       <p className="my-1">
         Already have an account? <Link to="/login">Sign In</Link>

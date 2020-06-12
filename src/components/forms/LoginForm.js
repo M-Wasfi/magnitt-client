@@ -8,6 +8,7 @@ import { login } from "../../actions/authActions";
 
 import { CardContainer } from "../CardContainer";
 import { Input } from "./common/Input";
+import { Button } from "../common/Button";
 
 const LoginForm = ({ login, isAuthenticated, errors }) => {
   const [credentials, setCredentials] = useState({
@@ -51,13 +52,8 @@ const LoginForm = ({ login, isAuthenticated, errors }) => {
           errors={errors}
         />
 
-        <button
-          type="submit"
-          className="btn btn-primary btn-block"
-          style={styles.submit}
-        >
-          Login
-        </button>
+        <Button style="btn btn-primary btn-block" label="Login" type="submit" />
+
         <div>
           <Link to="/register">Create an account?</Link>
         </div>

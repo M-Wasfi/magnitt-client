@@ -5,10 +5,12 @@ import UsersList from "../../components/user/UsersList";
 import { CardContainer } from "../../components/CardContainer";
 
 import { CompanyInfo } from "./common/CompanyInfo";
+import { Button } from "../common/Button";
+import CompaniesList from "./CompaniesList";
 
 export const CompanyProfile = ({
   company,
-  con,
+  conStatus,
   userId,
   myCompany,
   otherCompanyId,
@@ -17,68 +19,53 @@ export const CompanyProfile = ({
   handleReject,
   isAuthenticated,
 }) => {
+  const { status, type } = conStatus;
+  const owner = userId === myCompany.owner;
+  const ownCompany = otherCompanyId === myCompany._id;
+
   return (
     //TODO Review
     <div className="container">
       <CardContainer>
         <div style={styles.row}>
-          <h1>{company.companyName} </h1>
-          {isAuthenticated ? (
-            <h4>
-              {con.company && con.connection ? "Connected" : ""}
-              {con.company && con.sent && userId === myCompany.owner
-                ? "Connection request sent"
-                : ""}
-              {con.company && con.pending && userId === myCompany.owner
-                ? "Connection request pending"
-                : ""}
-            </h4>
-          ) : null}
+          <div>
+            <h1>{company.companyName} </h1>
+            {isAuthenticated && !owner ? (
+              <h4>
+                {status === "CONNECTED"
+                  ? "Connected"
+                  : status === "PENDING" && type === "sender"
+                  ? "Connection request sent"
+                  : "Connection request pending"}
+              </h4>
+            ) : null}
+          </div>
 
           {isAuthenticated ? (
-            !con.sent &&
-            !con.pending &&
-            !con.connection &&
-            con.company &&
-            otherCompanyId !== myCompany._id &&
-            userId === myCompany.owner ? (
-              <button
+            status === "no" && !ownCompany && owner ? (
+              <Button
+                style="btn btn-primary"
                 onClick={() => handleSend(company)}
-                className="btn btn-primary"
-                style={styles.submit}
-              >
-                Connect
-              </button>
-            ) : (
-              <div />
-            )
+                label="Connect"
+              />
+            ) : null
           ) : null}
 
           {isAuthenticated ? (
-            con.company &&
-            con.pending &&
-            !con.sent &&
-            !con.connection &&
-            userId === myCompany.owner ? (
+            status === "PENDING" && type === "receiver" && owner ? (
               <div>
-                <button
+                <Button
+                  style="btn btn-success"
                   onClick={() => handleAccept(company)}
-                  className="btn btn-success"
-                  style={styles.submit}
-                >
-                  Accept
-                </button>
-                <button
+                  label="Accept"
+                />
+                <Button
+                  style="btn btn-danger"
                   onClick={() => handleReject(company)}
-                  className="btn btn-danger"
-                  style={styles.submit}
-                >
-                  Reject
-                </button>
+                  label="Reject"
+                />
               </div>
-            ) : (
-              <div />
-            )
+            ) : null
           ) : null}
         </div>
       </CardContainer>
@@ -91,13 +78,18 @@ export const CompanyProfile = ({
         <h1>Employees</h1>
         <UsersList users={company.employees} own={true} />
       </CardContainer>
+
+      <CardContainer>
+        <h2>Company connections</h2>
+        <CompaniesList companies={company.companyConnections} />
+      </CardContainer>
     </div>
   );
 };
 
 CompanyProfile.propTypes = {
   company: PropTypes.object,
-  con: PropTypes.object,
+  conStatus: PropTypes.object,
   myCompany: PropTypes.object,
   userId: PropTypes.string,
   otherCompanyId: PropTypes.string,
@@ -117,3 +109,67 @@ const styles = {
     margin: 3,
   },
 };
+
+{
+  /* {isAuthenticated ? (
+            <h4>
+              {con.company && con.connection ? "Connected" : ""}
+              {con.company && con.sent && own
+                ? "Connection request sent"
+                : ""}
+              {con.company && con.pending && own
+                ? "Connection request pending"
+                : ""}
+            </h4>
+          ) : null} */
+}
+
+{
+  /* {isAuthenticated ? (
+            !con.sent &&
+            !con.pending &&
+            !con.connection &&
+            con.company &&
+            otherCompanyId !== myCompany._id &&
+            owner ? (
+              <button
+                onClick={() => handleSend(company)}
+                className="btn btn-primary"
+                style={styles.submit}
+              >
+                Connect
+              </button>
+            ) : (
+              <div />
+            )
+          ) : null} */
+}
+
+{
+  /* {isAuthenticated ? (
+            con.company &&
+            con.pending &&
+            !con.sent &&
+            !con.connection &&
+            own ? (
+              <div>
+                <button
+                  onClick={() => handleAccept(company)}
+                  className="btn btn-success"
+                  style={styles.submit}
+                >
+                  Accept
+                </button>
+                <button
+                  onClick={() => handleReject(company)}
+                  className="btn btn-danger"
+                  style={styles.submit}
+                >
+                  Reject
+                </button>
+              </div>
+            ) : (
+              <div />
+            )
+          ) : null} */
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -13,12 +13,26 @@ import { CardContainer } from "../../components/CardContainer";
 
 import { CompanyInfo } from "../../components/company/common/CompanyInfo";
 
-const MyCompanyPage = ({ getMyCompany, loading, company }) => {
-  useEffect(() => {
-    getMyCompany();
-  }, [getMyCompany]);
+import { getConnectionsList } from "../../helpers/getConnectionsList";
 
-  if (loading || company === null) {
+const MyCompanyPage = ({ getMyCompany, loading, company, connections }) => {
+  const [companyConnections, setCompanyConnections] = useState([]);
+  const [pendingConnections, setPendingConnections] = useState([]);
+  const [companiesLoading, setCompaniesLoading] = useState(true);
+
+  useEffect(() => {
+    setCompanyConnections(
+      getConnectionsList(connections, company._id, "CONNECTED")
+    );
+
+    setPendingConnections(
+      getConnectionsList(connections, company._id, "PENDING")
+    );
+
+    getMyCompany().then(() => setCompaniesLoading(false));
+  }, []);
+
+  if (loading || company === null || companiesLoading) {
     return <Spinner />;
   }
 
@@ -40,24 +54,21 @@ const MyCompanyPage = ({ getMyCompany, loading, company }) => {
           </Link>
         </div>
       </CardContainer>
-
       <CardContainer>
         <CompanyInfo company={company} />
       </CardContainer>
-
       <CardContainer>
         <h2>Employees </h2>
         <UsersList users={company.employees} own={true} />
       </CardContainer>
-
       <CardContainer>
         <h2>Company connections</h2>
-        <CompaniesList companies={company.companyConnections} />
+        <CompaniesList companies={companyConnections} />
       </CardContainer>
-
+      //TODO
       <CardContainer>
         <h2>Pending connection requests</h2>
-        <CompaniesList companies={company.pendingConnections} pending={true} />
+        <CompaniesList companies={pendingConnections} pending={true} />
       </CardContainer>
     </div>
   );
@@ -66,6 +77,7 @@ const MyCompanyPage = ({ getMyCompany, loading, company }) => {
 MyCompanyPage.propTypes = {
   company: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  connections: PropTypes.array.isRequired,
   getMyCompany: PropTypes.func.isRequired,
 };
 
@@ -80,6 +92,7 @@ const styles = {
 const mapStateToProps = (state) => ({
   company: state.companyReducer.myCompany,
   loading: state.companyReducer.loading,
+  connections: state.companyReducer.connections,
 });
 
 export default connect(mapStateToProps, { getMyCompany })(MyCompanyPage);

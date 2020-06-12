@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import { getMyCompany, getCompanyConnections } from "../actions/companyActions";
+
 import { CardContainer } from "../components/CardContainer";
 
-const HomePage = ({ user, isAuthenticated }) => {
+const HomePage = ({
+  user,
+  isAuthenticated,
+  getMyCompany,
+  getCompanyConnections,
+}) => {
+  useEffect(() => {
+    getMyCompany();
+    getCompanyConnections();
+  }, []);
+
   return (
     <CardContainer>
       {isAuthenticated ? (
@@ -25,6 +37,8 @@ const HomePage = ({ user, isAuthenticated }) => {
 HomePage.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
+  getMyCompany: PropTypes.func.isRequired,
+  getCompanyConnections: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -32,4 +46,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.authReducer.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps, {
+  getMyCompany,
+  getCompanyConnections,
+})(HomePage);

@@ -3,7 +3,6 @@ import { getCurrentUser } from "./authServices";
 import { apiUrl } from "../config.json";
 
 const endpoint = apiUrl + "/companies";
-const user = getCurrentUser();
 
 // @desc    Get all companies
 export async function getCompanies() {
@@ -31,8 +30,8 @@ export async function getMyCompany() {
 }
 
 // @desc    Create new company
-export async function createCompany(company) {
-  const body = { ...company, owner: user.id };
+export async function createCompany(company, userId) {
+  const body = { ...company, owner: userId };
 
   const response = await http.post(endpoint, body);
 
@@ -114,4 +113,5 @@ export default {
   acceptConnectionRequest,
   rejectConnectionRequest,
   addUserToCompany,
+  getCompanyConnections,
 };

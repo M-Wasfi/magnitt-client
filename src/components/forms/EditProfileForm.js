@@ -8,6 +8,7 @@ import { updateProfile } from "../../actions/authActions";
 
 import { CardContainer } from "../CardContainer";
 import { Input } from "./common/Input";
+import { Button } from "../common/Button";
 
 const EditProfileForm = ({ updateProfile, errors, loading, location }) => {
   const [user, setUser] = useState({
@@ -63,9 +64,7 @@ const EditProfileForm = ({ updateProfile, errors, loading, location }) => {
           errors={errors}
         />
 
-        <button type="submit" className="btn btn-primary" style={styles.submit}>
-          Edit
-        </button>
+        <Button style="btn btn-primary" label="Edit" type="submit" />
       </form>
     </CardContainer>
   );
