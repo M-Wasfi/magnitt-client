@@ -38,7 +38,7 @@ const UserProfile = ({ user, handleAdd, own, isAuthenticated, hasCompany }) => {
       </CardContainer>
 
       <CardContainer>
-        <UserInfo user={(user.userName, user.email, user.creationDate)} />
+        <UserInfo user={user} />
       </CardContainer>
 
       <CardContainer>

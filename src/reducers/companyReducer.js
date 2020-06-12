@@ -11,11 +11,13 @@ import {
   LOADING_COMPANIES,
   COMPANIES_REQUEST_FAILED,
   UPDATE_COMPANY,
+  GET_CONNECTIONS_REQUEST,
 } from "../actions/actionTypes";
 
 const initialState = {
   loading: true,
   companies: [],
+  connections: [],
   company: null,
   myCompany: null,
   errors: null,
@@ -67,8 +69,12 @@ export default function (state = initialState, action) {
         loading: false,
         myCompany: {
           ...state.myCompany,
-          sentConnections: [...state.myCompany.sentConnections, payload],
+          sentConnections: [
+            ...state.myCompany.sentConnections,
+            payload.company,
+          ],
         },
+        connections: [...state.connections, payload.connection],
       };
 
     case ACCEPT_CONNECTION_REQUEST:
@@ -77,19 +83,32 @@ export default function (state = initialState, action) {
         loading: false,
         myCompany: {
           ...state.myCompany,
-          companyConnections: [...state.myCompany.companyConnections, payload],
+          companyConnections: [
+            ...state.myCompany.companyConnections,
+            payload.company,
+          ],
           pendingConnections: [
             ...state.myCompany.pendingConnections.filter(
-              (com) => com._id === payload._id
+              (com) => com._id === payload.company._id
             ),
           ],
         },
+        connections: [...state.connections, payload.connection],
       };
 
     case REJECT_CONNECTION_REQUEST:
       return {
         ...state,
         loading: false,
+        myCompany: {
+          ...state.myCompany,
+          pendingConnections: [
+            ...state.myCompany.pendingConnections.filter(
+              (com) => com._id === payload.company._id
+            ),
+          ],
+        },
+        connections: [...state.connections, payload.connection],
       };
 
     case ADD_USER_TO_COMPANY:
@@ -107,6 +126,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         myCompany: null,
+        connections: [],
       };
 
     case LOADING_COMPANIES:

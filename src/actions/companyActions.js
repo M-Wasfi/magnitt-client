@@ -15,6 +15,7 @@ import {
   LOADING_COMPANIES,
   ADD_COMPANY_TO_USER,
   UPDATE_COMPANY,
+  GET_CONNECTIONS_REQUEST,
 } from "./actionTypes";
 
 export function loading() {
@@ -95,6 +96,7 @@ export const createCompany = (companyData) => async (dispatch) => {
       payload: company,
     });
   } catch (err) {
+    console.log(err);
     const error = err.response.data.data.errors;
 
     toast.error(err.response.data.message);
@@ -130,17 +132,34 @@ export const updateCompany = (companyData) => async (dispatch) => {
   }
 };
 
+export const getCompanyConnections = () => async (dispatch) => {
+  try {
+    dispatch(loading());
+
+    const connections = await api.getCompanyConnections();
+
+    dispatch({
+      type: GET_CONNECTIONS_REQUEST,
+      payload: connections,
+    });
+  } catch (err) {
+    dispatch(failed());
+
+    toast.error(err);
+  }
+};
+
 export const sendConnectionRequest = (company) => async (dispatch) => {
   try {
     dispatch(loading());
 
-    await api.sendConnectionRequest(company._id);
+    const connection = await api.sendConnectionRequest(company._id);
 
     toast.success("Connection request sent");
 
     dispatch({
       type: SEND_CONNECTION_REQUEST,
-      payload: company,
+      payload: { company, connection },
     });
   } catch (err) {
     dispatch(failed());
@@ -155,13 +174,13 @@ export const acceptConnectionRequest = (company) => async (dispatch) => {
   try {
     dispatch(loading());
 
-    await api.acceptConnectionRequest(company._id);
+    const connection = await api.acceptConnectionRequest(company._id);
 
     toast.success("Connection request accepted");
 
     dispatch({
       type: ACCEPT_CONNECTION_REQUEST,
-      payload: company,
+      payload: { company, connection },
     });
   } catch (err) {
     dispatch(failed());
@@ -176,13 +195,13 @@ export const rejectConnectionRequest = (company) => async (dispatch) => {
   try {
     dispatch(loading());
 
-    await api.rejectConnectionRequest(company._id);
+    const connection = await api.rejectConnectionRequest(company._id);
 
     toast.success("Connection request rejected");
 
     dispatch({
       type: REJECT_CONNECTION_REQUEST,
-      payload: company,
+      payload: { company, connection },
     });
   } catch (err) {
     dispatch(failed());
