@@ -18,10 +18,11 @@ run: npm start
 
 ## Built With
 
-React - The web framework used
-Redux - For state management
-React Router Dom - For routing
-Axios - For asynchronous HTTP request to REST endpoints
+React - The web framework used, 
+Redux - For state management, 
+React Router Dom - For routing, 
+Axios - For asynchronous HTTP request to REST endpoints, 
+Bootstrap - For styling
 
 ## Authors
 
