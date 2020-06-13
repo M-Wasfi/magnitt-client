@@ -1,4 +1,4 @@
-## Project Title
+## About Project
 
 MAGNiTT Connect is an assessment project for the Full Stack Developer position at MAGNiTT. This is the client project developed by Mohammed Wasfi.
 
@@ -18,10 +18,11 @@ run: npm start
 
 ## Built With
 
-React - The web framework used
-Redux - For state management
-React Router Dom - For routing
-Axios - For asynchronous HTTP request to REST endpoints
+React - The web framework used,
+Redux - For state management,
+React Router Dom - For routing,
+Axios - For asynchronous HTTP request to REST endpoints,
+Bootstrap - For styling
 
 ## Authors
 
