@@ -13,11 +13,12 @@ const EditCompanyForm = ({ myCompany, updateCompany, errors, loading }) => {
     companyName: "",
     industry: "",
     type: "",
-    size: 0,
+    size: "",
   });
 
   const [updated, setUpdated] = useState(false);
 
+  // Fill in company data
   useEffect(() => {
     setCompany({
       companyName: myCompany.companyName,
@@ -51,10 +52,10 @@ const EditCompanyForm = ({ myCompany, updateCompany, errors, loading }) => {
 };
 
 EditCompanyForm.propTypes = {
-  updateCompany: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
-  myCompany: PropTypes.object.isRequired,
+  updateCompany: PropTypes.func,
+  loading: PropTypes.bool,
+  errors: PropTypes.object,
+  myCompany: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

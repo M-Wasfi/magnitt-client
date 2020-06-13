@@ -13,7 +13,7 @@ const AddCompanyForm = ({ myCompany, createCompany, errors, user }) => {
     companyName: "",
     industry: "",
     type: "",
-    size: 0,
+    size: "",
   });
 
   const handleSubmit = async (e) => {
@@ -40,10 +40,10 @@ const AddCompanyForm = ({ myCompany, createCompany, errors, user }) => {
 };
 
 AddCompanyForm.propTypes = {
-  createCompany: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  myCompany: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  createCompany: PropTypes.func,
+  errors: PropTypes.object,
+  myCompany: PropTypes.object,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getMyCompany, getCompanyConnections } from "../actions/companyActions";
+import { getMyCompany } from "../actions/companyActions";
+import { getCompanyConnections } from "../actions/connectionActions";
 
 import { CardContainer } from "../components/CardContainer";
 
@@ -14,10 +15,11 @@ const HomePage = ({
   getMyCompany,
   getCompanyConnections,
 }) => {
+  // get logged in user company information and company's connections
   useEffect(() => {
     getMyCompany();
     getCompanyConnections();
-  }, []);
+  }, [getMyCompany, getCompanyConnections]);
 
   return (
     <CardContainer>
@@ -35,10 +37,10 @@ const HomePage = ({
 };
 
 HomePage.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
-  getMyCompany: PropTypes.func.isRequired,
-  getCompanyConnections: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  user: PropTypes.object,
+  getMyCompany: PropTypes.func,
+  getCompanyConnections: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

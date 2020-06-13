@@ -21,6 +21,7 @@ const SignupForm = ({ isAuthenticated, register, errors }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (user.password !== user.password_confirmation) {
       toast.error("Passwords do not match");
     } else {
@@ -38,6 +39,8 @@ const SignupForm = ({ isAuthenticated, register, errors }) => {
 
   return (
     <CardContainer>
+      <h2>Create a new account</h2>
+
       <form style={styles.form} onSubmit={handleSubmit}>
         <Input
           label="Name"
@@ -75,8 +78,9 @@ const SignupForm = ({ isAuthenticated, register, errors }) => {
           errors={errors}
         />
 
-        <Button style="btn btn-primary" label="Signup" type="submit" />
+        <Button shape="btn btn-primary" label="Signup" type="submit" />
       </form>
+
       <p className="my-1">
         Already have an account? <Link to="/login">Sign In</Link>
       </p>
@@ -85,8 +89,8 @@ const SignupForm = ({ isAuthenticated, register, errors }) => {
 };
 
 SignupForm.propTypes = {
-  isAuthenticated: PropTypes.string.isRequired,
-  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.string,
+  register: PropTypes.func,
   errors: PropTypes.object,
 };
 

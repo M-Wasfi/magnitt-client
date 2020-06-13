@@ -74,7 +74,7 @@ export default function (state = initialState, action) {
     case CREATE_COMPANY:
       return {
         ...state,
-        user: { ...state.user, company: payload._id },
+        user: { ...state.user, company: payload },
       };
 
     case LOGIN_FAIL:

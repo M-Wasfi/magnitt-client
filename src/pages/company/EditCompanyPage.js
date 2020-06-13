@@ -1,12 +1,15 @@
 import React from "react";
 
 import EditCompanyForm from "../../components/forms/EditCompanyForm";
+import { CardContainer } from "../../components/CardContainer";
 
 const EditCompanyPage = (props) => {
   return (
-    <div className="container">
+    <CardContainer>
+      <h2>Edit Company Info.</h2>
+
       <EditCompanyForm {...props} />
-    </div>
+    </CardContainer>
   );
 };
 

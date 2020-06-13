@@ -38,7 +38,7 @@ export default function UsersList({ users, own = false }) {
                     to={{
                       pathname: "/company",
                       state: {
-                        company: user.company,
+                        company: user.company._id,
                       },
                     }}
                   >
@@ -46,7 +46,7 @@ export default function UsersList({ users, own = false }) {
                   </Link>
                 </td>
               ) : (
-                "N/A"
+                <td>N/A</td>
               )
             ) : null}
 
@@ -62,5 +62,5 @@ export default function UsersList({ users, own = false }) {
 
 UsersList.propTypes = {
   own: PropTypes.bool,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.array,
 };

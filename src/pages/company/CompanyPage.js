@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 
+import { getCompany } from "../../actions/companyActions";
 import {
-  getCompany,
   sendConnectionRequest,
   acceptConnectionRequest,
   rejectConnectionRequest,
-} from "../../actions/companyActions";
+} from "../../actions/connectionActions";
 
 import { getStatusNew } from "../../helpers/getStatus";
 
@@ -30,24 +30,27 @@ const CompanyPage = ({
 }) => {
   const [status, setStatus] = useState({});
 
-  const otherCompanyId = location.state.company._id;
+  const otherCompanyId = location.state.company;
 
+  // get company info and determine its connection status based on the current user company's info
   useEffect(() => {
+    if (myCompany) {
+      setStatus(getStatusNew(myCompany._id, otherCompanyId, connections));
+    }
+
     getCompany(otherCompanyId);
+  }, [connections, location, getCompany, otherCompanyId, myCompany]);
 
-    setStatus(getStatusNew(myCompany._id, otherCompanyId, connections));
-  }, [getStatusNew, otherCompanyId, myCompany, connections]);
-
-  const handleSend = (company) => {
-    sendConnectionRequest(company);
+  const handleSend = () => {
+    sendConnectionRequest(otherCompanyId);
   };
 
-  const handleAccept = (company) => {
-    acceptConnectionRequest(company);
+  const handleAccept = () => {
+    acceptConnectionRequest(otherCompanyId);
   };
 
-  const handleReject = (company) => {
-    rejectConnectionRequest(company);
+  const handleReject = () => {
+    rejectConnectionRequest(otherCompanyId);
   };
 
   if (loading || company === null) {
@@ -58,38 +61,37 @@ const CompanyPage = ({
     <CompanyProfile
       conStatus={status}
       company={company}
-      otherCompanyId={otherCompanyId}
       myCompany={myCompany}
       handleAccept={handleAccept}
       handleSend={handleSend}
       handleReject={handleReject}
-      userId={user !== null ? user._id : 0}
+      userId={user !== null ? user._id : "0"}
       isAuthenticated={isAuthenticated}
     />
   );
 };
 
 CompanyPage.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
-  location: PropTypes.object.isRequired,
-  myCompany: PropTypes.object.isRequired,
-  company: PropTypes.object.isRequired,
-  connections: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
-  sendConnectionRequest: PropTypes.func.isRequired,
-  acceptConnectionRequest: PropTypes.func.isRequired,
-  rejectConnectionRequest: PropTypes.func.isRequired,
-  getCompany: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  loading: PropTypes.bool,
+  location: PropTypes.object,
+  myCompany: PropTypes.object,
+  company: PropTypes.object,
+  connections: PropTypes.array,
+  user: PropTypes.object,
+  sendConnectionRequest: PropTypes.func,
+  acceptConnectionRequest: PropTypes.func,
+  rejectConnectionRequest: PropTypes.func,
+  getCompany: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   myCompany: state.companyReducer.myCompany,
   company: state.companyReducer.company,
-  connections: state.companyReducer.connections,
   loading: state.companyReducer.loading,
   user: state.authReducer.user,
   isAuthenticated: state.authReducer.isAuthenticated,
+  connections: state.connectionReducer.connections,
 });
 
 export default connect(mapStateToProps, {

@@ -6,16 +6,12 @@ import {
   GET_ALL_COMPANIES,
   GET_MY_COMPANY,
   CREATE_COMPANY,
-  SEND_CONNECTION_REQUEST,
-  ACCEPT_CONNECTION_REQUEST,
-  REJECT_CONNECTION_REQUEST,
   ADD_USER_TO_COMPANY,
   GET_COMPANY,
   COMPANIES_REQUEST_FAILED,
   LOADING_COMPANIES,
   ADD_COMPANY_TO_USER,
   UPDATE_COMPANY,
-  GET_CONNECTIONS_REQUEST,
 } from "./actionTypes";
 
 export function loading() {
@@ -129,86 +125,6 @@ export const updateCompany = (companyData) => async (dispatch) => {
       type: COMPANIES_REQUEST_FAILED,
       payload: error,
     });
-  }
-};
-
-export const getCompanyConnections = () => async (dispatch) => {
-  try {
-    dispatch(loading());
-
-    const connections = await api.getCompanyConnections();
-
-    dispatch({
-      type: GET_CONNECTIONS_REQUEST,
-      payload: connections,
-    });
-  } catch (err) {
-    dispatch(failed());
-
-    toast.error(err);
-  }
-};
-
-export const sendConnectionRequest = (company) => async (dispatch) => {
-  try {
-    dispatch(loading());
-
-    const connection = await api.sendConnectionRequest(company._id);
-
-    toast.success("Connection request sent");
-
-    dispatch({
-      type: SEND_CONNECTION_REQUEST,
-      payload: { company, connection },
-    });
-  } catch (err) {
-    dispatch(failed());
-
-    const error = err.response.data.message;
-
-    toast.error(error);
-  }
-};
-
-export const acceptConnectionRequest = (company) => async (dispatch) => {
-  try {
-    dispatch(loading());
-
-    const connection = await api.acceptConnectionRequest(company._id);
-
-    toast.success("Connection request accepted");
-
-    dispatch({
-      type: ACCEPT_CONNECTION_REQUEST,
-      payload: { company, connection },
-    });
-  } catch (err) {
-    dispatch(failed());
-
-    const error = err.response.data.message;
-
-    toast.error(error);
-  }
-};
-
-export const rejectConnectionRequest = (company) => async (dispatch) => {
-  try {
-    dispatch(loading());
-
-    const connection = await api.rejectConnectionRequest(company._id);
-
-    toast.success("Connection request rejected");
-
-    dispatch({
-      type: REJECT_CONNECTION_REQUEST,
-      payload: { company, connection },
-    });
-  } catch (err) {
-    dispatch(failed());
-
-    const error = err.response.data.message;
-
-    toast.error(error);
   }
 };
 

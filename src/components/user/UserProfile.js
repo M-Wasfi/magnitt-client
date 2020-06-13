@@ -15,12 +15,16 @@ const UserProfile = ({ user, handleAdd, own, isAuthenticated, hasCompany }) => {
       <CardContainer>
         <div style={styles.row}>
           <h2>{user.userName}</h2>
+
+          {/* Determine whether to show the add to company button */}
           {!isAuthenticated || !hasCompany ? null : user.company ||
             own ? null : (
             <button onClick={handleAdd} className="btn btn-primary">
               Add to company
             </button>
           )}
+
+          {/* Determine whether to show the edit profile button */}
           {!own ? null : (
             <Link
               to={{
@@ -54,7 +58,7 @@ const UserProfile = ({ user, handleAdd, own, isAuthenticated, hasCompany }) => {
                 to={{
                   pathname: "/company",
                   state: {
-                    company: user.company,
+                    company: user.company._id,
                   },
                 }}
               >
@@ -70,11 +74,11 @@ const UserProfile = ({ user, handleAdd, own, isAuthenticated, hasCompany }) => {
 };
 
 UserProfile.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   own: PropTypes.bool,
-  isAuthenticated: PropTypes.bool.isRequired,
-  hasCompany: PropTypes.bool.isRequired,
-  handleAdd: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  hasCompany: PropTypes.bool,
+  handleAdd: PropTypes.func,
 };
 
 const styles = {

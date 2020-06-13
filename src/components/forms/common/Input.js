@@ -13,6 +13,7 @@ export const Input = ({
   return (
     <div className="form-group">
       <label htmlFor={label}>{label}</label>
+
       <input
         required
         type={type}
@@ -22,11 +23,14 @@ export const Input = ({
         value={value}
         onChange={(e) => handleChange(e)}
       />
+
       {name === "password" ? (
         <small id="passwordHelpBlock" className="form-text text-muted">
           Your password must be 8-20 characters long
         </small>
       ) : null}
+
+      {/* Show errors if available */}
       {errors && errors[name] ? (
         <p style={styles.error}>{errors[name]}</p>
       ) : null}
@@ -35,12 +39,12 @@ export const Input = ({
 };
 
 Input.propTypes = {
-  label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  name: PropTypes.string,
   placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  handleChange: PropTypes.func,
   errors: PropTypes.object,
 };
 

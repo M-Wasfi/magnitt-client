@@ -20,6 +20,7 @@ const EditProfileForm = ({ updateProfile, errors, loading, location }) => {
 
   const userData = location.state.user;
 
+  // Fill in user data
   useEffect(() => {
     setUser({
       userName: userData.userName,
@@ -43,7 +44,7 @@ const EditProfileForm = ({ updateProfile, errors, loading, location }) => {
 
   return (
     <CardContainer>
-      <form style={styles.form} onSubmit={handleSubmit}>
+      <form style={{ marginTop: 1 }} onSubmit={handleSubmit}>
         <Input
           label="Name"
           type="text"
@@ -64,32 +65,17 @@ const EditProfileForm = ({ updateProfile, errors, loading, location }) => {
           errors={errors}
         />
 
-        <Button style="btn btn-primary" label="Edit" type="submit" />
+        <Button shape="btn btn-primary" label="Edit" type="submit" />
       </form>
     </CardContainer>
   );
 };
 
 EditProfileForm.propTypes = {
-  updateProfile: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-};
-
-const styles = {
-  paper: {
-    marginTop: 8,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  form: {
-    marginTop: 1,
-  },
-  submit: {
-    margin: 3,
-  },
+  updateProfile: PropTypes.func,
+  loading: PropTypes.bool,
+  errors: PropTypes.object,
+  location: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

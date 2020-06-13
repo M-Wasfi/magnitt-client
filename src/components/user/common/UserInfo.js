@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { CardContainer } from "../../CardContainer";
-
 export const UserInfo = ({ user }) => {
   return (
     <>

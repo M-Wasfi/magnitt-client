@@ -6,7 +6,6 @@ import { CardContainer } from "../../components/CardContainer";
 
 import { CompanyInfo } from "./common/CompanyInfo";
 import { Button } from "../common/Button";
-import CompaniesList from "./CompaniesList";
 
 export const CompanyProfile = ({
   company,
@@ -20,19 +19,24 @@ export const CompanyProfile = ({
   isAuthenticated,
 }) => {
   const { status, type } = conStatus;
-  const owner = userId === myCompany.owner;
-  const ownCompany = otherCompanyId === myCompany._id;
+
+  // Determine whether the company is the current user company
+  //  and wether he is the owner of the company
+  const owner = myCompany ? userId === myCompany.owner : false;
+  const ownCompany = myCompany ? company._id === myCompany._id : false;
 
   return (
-    //TODO Review
     <div className="container">
       <CardContainer>
         <div style={styles.row}>
           <div>
             <h1>{company.companyName} </h1>
-            {isAuthenticated && !owner ? (
+            {isAuthenticated && owner && !ownCompany ? (
               <h4>
-                {status === "CONNECTED"
+                {/* Determine the connection status */}
+                {status === "no"
+                  ? null
+                  : status === "CONNECTED"
                   ? "Connected"
                   : status === "PENDING" && type === "sender"
                   ? "Connection request sent"
@@ -41,27 +45,29 @@ export const CompanyProfile = ({
             ) : null}
           </div>
 
+          {/* Determine whether to show connect button */}
           {isAuthenticated ? (
             status === "no" && !ownCompany && owner ? (
               <Button
-                style="btn btn-primary"
-                onClick={() => handleSend(company)}
+                shape="btn btn-primary"
+                onClick={handleSend}
                 label="Connect"
               />
             ) : null
           ) : null}
 
+          {/* Determine whether to show accept & reject buttons */}
           {isAuthenticated ? (
             status === "PENDING" && type === "receiver" && owner ? (
               <div>
                 <Button
-                  style="btn btn-success"
-                  onClick={() => handleAccept(company)}
+                  shape="btn btn-success"
+                  onClick={handleAccept}
                   label="Accept"
                 />
                 <Button
-                  style="btn btn-danger"
-                  onClick={() => handleReject(company)}
+                  shape="btn btn-danger"
+                  onClick={handleReject}
                   label="Reject"
                 />
               </div>
@@ -78,11 +84,6 @@ export const CompanyProfile = ({
         <h1>Employees</h1>
         <UsersList users={company.employees} own={true} />
       </CardContainer>
-
-      <CardContainer>
-        <h2>Company connections</h2>
-        <CompaniesList companies={company.companyConnections} />
-      </CardContainer>
     </div>
   );
 };
@@ -92,7 +93,7 @@ CompanyProfile.propTypes = {
   conStatus: PropTypes.object,
   myCompany: PropTypes.object,
   userId: PropTypes.string,
-  otherCompanyId: PropTypes.string,
+  // otherCompanyId: PropTypes.string,
   handleSend: PropTypes.func,
   handleAccept: PropTypes.func,
   handleReject: PropTypes.func,
@@ -109,67 +110,3 @@ const styles = {
     margin: 3,
   },
 };
-
-{
-  /* {isAuthenticated ? (
-            <h4>
-              {con.company && con.connection ? "Connected" : ""}
-              {con.company && con.sent && own
-                ? "Connection request sent"
-                : ""}
-              {con.company && con.pending && own
-                ? "Connection request pending"
-                : ""}
-            </h4>
-          ) : null} */
-}
-
-{
-  /* {isAuthenticated ? (
-            !con.sent &&
-            !con.pending &&
-            !con.connection &&
-            con.company &&
-            otherCompanyId !== myCompany._id &&
-            owner ? (
-              <button
-                onClick={() => handleSend(company)}
-                className="btn btn-primary"
-                style={styles.submit}
-              >
-                Connect
-              </button>
-            ) : (
-              <div />
-            )
-          ) : null} */
-}
-
-{
-  /* {isAuthenticated ? (
-            con.company &&
-            con.pending &&
-            !con.sent &&
-            !con.connection &&
-            own ? (
-              <div>
-                <button
-                  onClick={() => handleAccept(company)}
-                  className="btn btn-success"
-                  style={styles.submit}
-                >
-                  Accept
-                </button>
-                <button
-                  onClick={() => handleReject(company)}
-                  className="btn btn-danger"
-                  style={styles.submit}
-                >
-                  Reject
-                </button>
-              </div>
-            ) : (
-              <div />
-            )
-          ) : null} */
-}

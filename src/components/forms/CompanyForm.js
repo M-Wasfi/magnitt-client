@@ -12,6 +12,7 @@ export const CompanyForm = ({
   errors,
 }) => {
   const { companyName, type, size, industry } = company;
+
   return (
     <CardContainer>
       <form style={styles.form} onSubmit={handleSubmit}>
@@ -55,17 +56,17 @@ export const CompanyForm = ({
           errors={errors}
         />
 
-        <Button style="btn btn-primary" label="Submit" type="submit" />
+        <Button shape="btn btn-primary" label="Submit" type="submit" />
       </form>
     </CardContainer>
   );
 };
 
 CompanyForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  company: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func,
+  handleChange: PropTypes.func,
+  errors: PropTypes.object,
+  company: PropTypes.object,
 };
 
 const styles = {

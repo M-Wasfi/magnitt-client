@@ -12,7 +12,7 @@ export const CompanyCard = ({ company }) => {
             to={{
               pathname: "/company",
               state: {
-                company: company,
+                company: company._id,
               },
             }}
           >

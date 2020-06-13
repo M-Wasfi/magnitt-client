@@ -7,13 +7,14 @@ import { Link } from "react-router-dom";
 import {
   acceptConnectionRequest,
   rejectConnectionRequest,
-} from "../../actions/companyActions";
+} from "../../actions/connectionActions";
 
 import { EmptyList } from "../EmptyList";
+import { Button } from "../common/Button";
 
 const CompaniesList = ({
   companies,
-  pending,
+  companyId,
   acceptConnectionRequest,
   rejectConnectionRequest,
 }) => {
@@ -24,13 +25,13 @@ const CompaniesList = ({
   const handleReject = (company) => {
     rejectConnectionRequest(company);
   };
-  //TODO table refactor
+
   return companies.length > 0 ? (
     <table className="table table-striped">
       <thead>
         <tr>
           <th scope="col">Name</th>
-          <th scope="col">Industry</th>
+          <th scope="col">Connection Date</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -42,31 +43,46 @@ const CompaniesList = ({
                 to={{
                   pathname: "/company",
                   state: {
-                    company: company,
+                    company:
+                      companyId === company.sender._id
+                        ? company.receiver._id
+                        : company.sender._id,
                   },
                 }}
               >
-                {company.companyName}
+                {companyId === company.sender._id
+                  ? company.receiver.companyName
+                  : company.sender.companyName}
               </Link>
             </td>
 
-            <td>{company.industry}</td>
+            <td> {company.creationDate}</td>
 
             <td>
-              {pending ? (
+              {company.status === "PENDING" ? (
                 <div>
-                  <button
-                    className="btn btn-success"
-                    onClick={() => handleAccept(company)}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => handleReject(company)}
-                  >
-                    Reject
-                  </button>
+                  <Button
+                    shape="btn btn-success"
+                    onClick={() =>
+                      handleAccept(
+                        companyId === company.sender._id
+                          ? company.receiver._id
+                          : company.sender._id
+                      )
+                    }
+                    label="Accept"
+                  />
+                  <Button
+                    shape="btn btn-danger"
+                    onClick={() =>
+                      handleReject(
+                        companyId === company.sender._id
+                          ? company.receiver._id
+                          : company.sender._id
+                      )
+                    }
+                    label="Reject"
+                  />
                 </div>
               ) : (
                 <div />
@@ -85,7 +101,7 @@ CompaniesList.propTypes = {
   acceptConnectionRequest: PropTypes.func,
   rejectConnectionRequest: PropTypes.func,
   companies: PropTypes.array,
-  pending: PropTypes.bool,
+  companyId: PropTypes.string,
 };
 
 export default connect(null, {

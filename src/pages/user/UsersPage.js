@@ -45,11 +45,11 @@ const UsersPage = ({
 };
 
 UsersPage.propTypes = {
-  users: PropTypes.array.isRequired,
-  searchResult: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
-  searching: PropTypes.bool.isRequired,
-  getAllUsers: PropTypes.func.isRequired,
+  users: PropTypes.array,
+  searchResult: PropTypes.array,
+  loading: PropTypes.bool,
+  searching: PropTypes.bool,
+  getAllUsers: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

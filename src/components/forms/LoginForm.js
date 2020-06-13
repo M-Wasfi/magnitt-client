@@ -31,7 +31,14 @@ const LoginForm = ({ login, isAuthenticated, errors }) => {
 
   return (
     <CardContainer>
-      <form style={styles.form} onSubmit={handleSubmit}>
+      <h2>Welcome back</h2>
+
+      <form
+        style={{
+          marginTop: 1,
+        }}
+        onSubmit={handleSubmit}
+      >
         <Input
           label="Email address"
           type="email"
@@ -52,7 +59,7 @@ const LoginForm = ({ login, isAuthenticated, errors }) => {
           errors={errors}
         />
 
-        <Button style="btn btn-primary btn-block" label="Login" type="submit" />
+        <Button shape="btn btn-primary btn-block" label="Login" type="submit" />
 
         <div>
           <Link to="/register">Create an account?</Link>
@@ -63,24 +70,9 @@ const LoginForm = ({ login, isAuthenticated, errors }) => {
 };
 
 LoginForm.propTypes = {
-  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
-};
-
-const styles = {
-  paper: {
-    marginTop: 14,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  form: {
-    marginTop: 1,
-  },
-  submit: {
-    margin: 3,
-  },
+  login: PropTypes.func,
+  isAuthenticated: PropTypes.bool,
+  errors: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

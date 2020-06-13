@@ -15,8 +15,8 @@ const ProfilePage = ({ user, loading }) => {
 };
 
 ProfilePage.propTypes = {
-  user: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

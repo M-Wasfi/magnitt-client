@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./PrivateRoute";
 import AppContainer from "../components/AppContainer";
 
-import Landing from "../pages/Landing";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/auth_pages/LoginPage";
 import SignupPage from "../pages/auth_pages/SignupPage";
@@ -25,11 +24,11 @@ export default function Routes() {
     <section>
       <ToastContainer />
       <Switch>
-        <Route exact path="/" component={Landing} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/register" component={SignupPage} />
 
         <AppContainer>
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/companies" component={CompaniesPage} />
           <Route exact path="/company" component={CompanyPage} />
@@ -54,8 +53,8 @@ export default function Routes() {
           />
         </AppContainer>
 
-        {/* redirect user to Login page if route does not exist and user is not authenticated */}
-        <Route component={LoginPage} />
+        {/* redirect user to Home page if route does not exist  */}
+        <Route path="*" component={HomePage} />
       </Switch>
     </section>
   );

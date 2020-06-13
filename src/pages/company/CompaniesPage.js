@@ -32,9 +32,9 @@ const CompaniesPage = ({ companies, loading, getAllCompanies }) => {
 };
 
 CompaniesPage.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  companies: PropTypes.array.isRequired,
-  getAllCompanies: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  companies: PropTypes.array,
+  getAllCompanies: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

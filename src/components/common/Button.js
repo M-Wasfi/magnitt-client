@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export const Button = (props) => {
   return (
-    <button {...props} className={props.style} style={styles.button}>
+    <button {...props} className={props.shape} style={styles.button}>
       {props.label}
     </button>
   );

@@ -21,6 +21,7 @@ const UserPage = ({
 }) => {
   const userId = location.state.user._id;
 
+  // get user information
   useEffect(() => {
     getUser(userId);
   }, [getUser, userId]);
@@ -32,27 +33,27 @@ const UserPage = ({
   if (loading || user === null) {
     return <Spinner />;
   }
-  console.log(currentUser.company);
+
   return (
     <UserProfile
       user={user}
       handleAdd={handleAdd}
       isAuthenticated={isAuthenticated}
-      own={user.userName === currentUser.userName}
-      hasCompany={currentUser.company !== null}
+      own={currentUser ? user.userName === currentUser.userName : false}
+      hasCompany={currentUser ? currentUser.company !== null : false}
     />
   );
 };
 
 UserPage.propTypes = {
-  location: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  currentUser: PropTypes.object.isRequired,
-  myCompany: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  addUserToCompany: PropTypes.func.isRequired,
-  getUser: PropTypes.func.isRequired,
+  location: PropTypes.object,
+  user: PropTypes.object,
+  currentUser: PropTypes.object,
+  myCompany: PropTypes.object,
+  loading: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+  addUserToCompany: PropTypes.func,
+  getUser: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

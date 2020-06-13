@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
+import store from "./store";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+
+import { tokenKey } from "./config.json";
 
 import Routes from "./routes";
 
-// Redux
-import store from "./store";
-import { Provider } from "react-redux";
 import { loadUser } from "./actions/authActions";
-import { getMyCompany, getCompanyConnections } from "./actions/companyActions";
+import { getMyCompany } from "./actions/companyActions";
+import { getCompanyConnections } from "./actions/connectionActions";
 
 import methods from "./api/httpService";
 
@@ -16,7 +18,7 @@ import "./App.css";
 // If token exists,  get user data and his company data
 const App = () => {
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(tokenKey);
 
     methods.setJwt(token);
     store.dispatch(loadUser());

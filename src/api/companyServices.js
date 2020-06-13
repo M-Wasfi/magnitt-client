@@ -1,5 +1,4 @@
 import http from "./httpService";
-import { getCurrentUser } from "./authServices";
 import { apiUrl } from "../config.json";
 
 const endpoint = apiUrl + "/companies";
@@ -56,42 +55,6 @@ export function deleteCompany(companyId) {
   return http.delete(endpoint + `/${companyId}`);
 }
 
-// @desc    Get all company's connections
-export async function getCompanyConnections() {
-  const response = await http.get(endpoint + "/my-connections");
-
-  const connections = response.data.data;
-
-  return connections;
-}
-
-// @desc    Send connection request to company by id
-export async function sendConnectionRequest(companyId) {
-  const response = await http.post(endpoint + "/connections/send", {
-    company: companyId,
-  });
-
-  return response.data.data;
-}
-
-// @desc    Accept connection request of company by id
-export async function acceptConnectionRequest(companyId) {
-  const response = await http.post(endpoint + "/connections/accept", {
-    company: companyId,
-  });
-
-  return response.data.data;
-}
-
-// @desc    Reject connection request of company by id
-export async function rejectConnectionRequest(companyId) {
-  const response = await http.post(endpoint + "/connections/reject", {
-    company: companyId,
-  });
-
-  return response.data.data;
-}
-
 // @desc    Add user to company by id
 export async function addUserToCompany(employeeId) {
   const response = await http.post(endpoint + "/employee", {
@@ -105,13 +68,8 @@ export default {
   getCompanies,
   getCompany,
   getMyCompany,
-  getCurrentUser,
   createCompany,
   updateCompany,
   deleteCompany,
-  sendConnectionRequest,
-  acceptConnectionRequest,
-  rejectConnectionRequest,
   addUserToCompany,
-  getCompanyConnections,
 };
