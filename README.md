@@ -1,4 +1,4 @@
-## Project Title
+## About Project
 
 MAGNiTT Connect is an assessment project for the Full Stack Developer position at MAGNiTT. This is the client project developed by Mohammed Wasfi.
 
