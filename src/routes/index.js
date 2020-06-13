@@ -1,6 +1,6 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import { Route, Switch } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 import PrivateRoute from "./PrivateRoute";
@@ -24,37 +24,36 @@ export default function Routes() {
     <section>
       <ToastContainer />
       <Switch>
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={SignupPage} />
+        <Route path="/login" exact component={LoginPage} />
+        <Route path="/register" exact component={SignupPage} />
 
         <AppContainer>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/companies" component={CompaniesPage} />
-          <Route exact path="/company" component={CompanyPage} />
-          <PrivateRoute exact path="/my-company" component={MyCompanyPage} />
+          <Route path="/" exact component={HomePage} />
+          <Route path="/home" exact component={HomePage} />
+          <Route path="/companies" exact component={CompaniesPage} />
+          <Route path="/company" exact component={CompanyPage} />
+          <PrivateRoute path="/my-company" exact component={MyCompanyPage} />
           <PrivateRoute
-            exact
             path="/edit-company"
+            exact
             component={EditCompanyPage}
           />
           <PrivateRoute
-            exact
             path="/add-company"
+            exact
             component={CreateCompanyPage}
           />
-          <Route exact path="/users" component={UsersPage} />
-          <Route exact path="/user" component={UserPage} />
-          <PrivateRoute exact path="/profile" component={ProfilePage} />
+          <Route path="/users" exact component={UsersPage} />
+          <Route path="/user" exact component={UserPage} />
+          <PrivateRoute path="/profile" exact component={ProfilePage} />
           <PrivateRoute
-            exact
             path="/edit-profile"
+            exact
             component={EditProfilePage}
           />
+          {/* redirect user to Home page if route does not exist  */}
+          <Redirect to="/" />
         </AppContainer>
-
-        {/* redirect user to Home page if route does not exist  */}
-        <Route path="*" component={HomePage} />
       </Switch>
     </section>
   );
